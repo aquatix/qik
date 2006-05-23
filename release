@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ "$1" = "" ]
+then
+	echo "Usage:"
+	echo "  release <version>"
+	echo ""
+else
+	rm -r qik_root/*
+	cp -a core/* qik_root/
+	cp -a core/.htaccess qik_root/
+	cp -a example_site/* qik_root/
+	tar cjf backup/$1_release.tar.bz2 qik_root
+fi
+

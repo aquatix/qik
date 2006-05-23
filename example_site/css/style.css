@@ -1,0 +1,232 @@
+body
+{
+	font-family: verdana, tahoma, helvetica, sans;
+	font-size: .8em;
+/*	background-color: #1C45A3;*/
+}
+
+/* Hides from IE5-mac; HACK for iframe not resizing properly in IE \*/
+* html .content {height: 1%;}
+/* End hide from IE5-mac */
+
+h1
+{
+	font-size: 1.9em;
+}
+
+h2
+{
+	font-size: 1.3em;
+}
+
+h3
+{
+	font-size: 1em;
+	font-weight: bold;
+}
+
+ul li
+{
+	list-style-type: square;
+}
+
+a
+{
+	text-decoration: none;
+	color: #1C45A3;
+}
+
+a:hover
+{
+	text-decoration: underline;
+	color: #1C45A3;
+}
+
+th
+{
+	text-align: left;
+	font-weight: bold;
+}
+
+
+#banner
+{
+/* Use when not using "portalnav"
+	background-color: #E7F1FB;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+*/
+}
+
+.navbar
+{
+	margin-top: .5em;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	background-color: #DDEEFF;
+	padding: .5em;
+}
+
+	.navbar a
+	{
+		padding-top: .2em;
+		padding-bottom: .2em;
+		padding-left: .5em;
+		padding-right: .5em;
+		color: #FFF;
+		text-decoration: none;
+		background-color: #1C45A3;
+		border-top: 1px solid #5384f6;
+		border-left: 1px solid #5384f6;
+		border-bottom: 1px solid #002373;
+		border-right: 1px solid #002373;
+	}
+
+	.navbar a:hover
+	{
+		padding-top: .2em;
+		padding-bottom: .2em;
+		padding-left: .5em;
+		padding-right: .5em;
+		color: #FFF;
+		text-decoration: none;
+		background-color: #6984ff;
+		border-bottom: 1px solid #5384f6;
+		border-right: 1px solid #5384f6;
+		border-top: 1px solid #002373;
+		border-left: 1px solid #002373;
+	}
+
+.subnavbar
+{
+	width: 13em;
+/*	margin-top: .5em;*/
+	margin-bottom: 1em;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	background-color: #DDEEFF;
+	padding: .3em;
+}
+
+	.subnavbar h2
+	{
+		font-size: 1.1em;
+		font-weight: bold;
+		margin-top: 0;
+		margin-bottom: .5em;
+		border-bottom: 0;
+		padding-left: .3em;
+		padding-right: .3em;
+		padding-top: .2em;
+		padding-bottom: .2em;
+		text-align: center;
+	}
+
+	.subnavbar ul
+	{
+		margin-top: 0;
+		margin-bottom: 0;
+		margin-left: 1em;
+		padding-left: 0;
+	}
+
+	.subnavbar li
+	{
+		padding-left: 0;
+		margin-left: 0;
+	}
+
+	.subnavbar ul.info
+	{
+		margin-top: .5em;
+		padding-top: .5em;
+		border-top: 1px dotted #FFF;
+		border-top: 1px dotted #3f5671;
+	}
+
+	.subnavbar ul.info li
+	{
+		list-style: none;
+		font-size: .7em;
+	}
+
+.pagebody
+{
+	color: #000;
+	background-color: #FFF;
+	margin-top: .5em;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding: .3em;
+	line-height: 1.2;
+}
+
+.content
+{
+	position: relative;
+}
+
+.content img
+{
+	border: 1px solid #1C45A3;
+	padding: 3px;
+}
+
+.news
+{
+/*	width: 15em;*/
+	margin-top: .5em;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+/*	background-color: #DDEEFF;*/
+	padding: .3em;
+}
+
+	.news .date
+	{
+		/*border-top: 1px dotted #1C45A3;*/
+		font-weight: bold;
+	}
+
+	.news p
+	{
+		margin-top: 0;
+		padding-top: 0;
+		padding-left: 1em;
+		padding-bottom: .3em;
+		margin-bottom: 0;
+	}
+
+.formfields p
+{
+	margin-top: 0;
+	margin-bottom: .2em;
+}
+
+.footer
+{
+	clear: both;
+/*	padding-left: 15em;*/
+	margin-top: .5em;
+	padding: .2em;
+	border-top: 1px solid #CCC;
+	font-size: .8em;
+	font-style: italic;
+}
+
+/* Extra */
+.logo
+{
+	float: left;
+}
+
+.portalnav
+{
+	float: right;
+	text-align: right;
+	padding-right: .5em;
+	padding-top: .1em;
+	padding-bottom: .1em;
+}
+
+

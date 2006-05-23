@@ -1,0 +1,26 @@
+#<Files ~ "/site">
+#	Order allow,deny
+#	Deny from all
+#</Files>
+
+<Files ~ ".desc">
+	Order allow,deny
+	Deny from all
+</Files>
+
+<Files ~ ".section">
+	Order allow,deny
+	Deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^page/sitemap index.php?action=sitemap
+	RewriteRule ^page/viewlog/([^/]+)/([^/]+) index.php?action=viewlog&logaction=$1&offset=$2
+	RewriteRule ^page/viewlog/([^/]+)/ index.php?action=viewlog&logaction=$1
+	RewriteRule ^page/viewlog index.php?action=viewlog
+	#RewriteRule ^page/([A-z0-9]+)/([A-z0-9]+) index.php?section=$1&page=$2
+	RewriteRule ^page/([^/]+)/([^/]+) index.php?section=$1&page=$2
+	#RewriteRule ^page/([A-z0-9]+) index.php?section=$1
+	RewriteRule ^page/([^/]+) index.php?section=$1
+</IfModule>
