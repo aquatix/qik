@@ -1,0 +1,7 @@
+Qik site framework: TODO
+
+- rss.php
+- automatic links from generated news blocks to rss.php [for example rss.php?feed=home] with nice RSS icon
+- highlighted button/link for section you're currently in
+- search functionality [searches text of pages, tiles and news]
+

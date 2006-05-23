@@ -1,0 +1,46 @@
+Qik site framework: CHANGELOG
+
+2006-03-31
+- Abstrahized data-retrieval tasks. Put all file system related calls into
+  their own library [mod_qik_files.php]
+
+
+2006-03-30
+- Finished "logging to file" support
+
+
+2006-03-29
+- Added logging support
+
+
+2006-02-01
+- Better redirection support for faulty uri's
+- Shouldn't redirect when being used for the webserver's error pages
+
+
+2006-01-22
+- Added support for "icon" tags, with @@@icon=spreadsheet@@@ etc for instant 24x24
+  pictograph
+- Fixed lack of tagging support in Sitemap
+- Fixed issue with empty items showing up in Sitemap for pages with an empty value
+  [which won't show up in the normal navigation]
+
+
+2006-01-21
+- Added support for images in the navigation items
+- Added support for more characters in section- and page-keys [for uri's], not
+  only A-z and 0-9
+- Framework can show generic HTTP Error pages now [config your webserver by setting
+  lines like:
+  ErrorDocument 403 /page/error/403/
+
+
+2006-01-19
+- Updated Qik so it supports multiple languages, news items and more.
+  - tags support 'tiles' and 'news' now, in the form of @@@tile=name@@@ and
+    @@@news=name@@@
+- Extensive rewrite to make it a lot more versatile and even easier to set up
+- Placed all user customizable things inside site/
+  - including the pagetemplate.php, which has the functions for generating the
+    body, navigation and subnavigation of the pages
+
