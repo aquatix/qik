@@ -144,7 +144,8 @@ if ('sitemap' == $action)
 	$subsections = getLogTypes($skel);
 	$subnav = buildSubnav($skel, 'viewlog', $subsections);
 
-	$body .= buildVisitsLogOverview($skel, $logaction, $offset);
+	$date = getRequestParam('date', null);
+	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
 	addToLog($skel, 'special', 'viewlog', 200);
 	echo processTags($skel, buildPage($skel, dict($skel, 'visitslog'), $navbar, $subnav, $body));
 	exit;

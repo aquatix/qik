@@ -1,12 +1,13 @@
 <?php
 /*
- * v0.1.05 2006-04-03
+ * v0.1.06 2006-05-25
  */
 
 function getLogTypes($skel)
 {
 	return array(
 			'pages=' . dict($skel, 'logpages') . "\n",
+			'hitsperdate=' . dict($skel, 'loghitsperdate') . "\n",
 			'ips=' . dict($skel, 'logips') . "\n",
 			'hits=' . dict($skel, 'loghits') . "\n",
 			'404s=' . dict($skel, 'log404s') . "\n"
@@ -42,9 +43,9 @@ function getUniqueIPs($skel, $action = 'pages', $offset = 0)
 }
 
 
-function getHitsPerPage($skel, $offset, $number)
+function getHitsPerPage($skel, $offset, $number, $date = null)
 {
-	return logGetHitsPerPage($skel, $offset, $number);
+	return logGetHitsPerPage($skel, $offset, $number, $date);
 }
 
 
