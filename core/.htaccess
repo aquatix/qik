@@ -16,6 +16,9 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteRule ^page/sitemap index.php?action=sitemap
+	#RewriteRule ^page/viewlog/([^/]+)/([^/]+)/([^/]+)/ index.php?action=viewlog&logaction=$1&offset=$2&date=$3
+	RewriteRule ^page/viewlog/hitsperdate/([^/]+)/([^/]+)/ index.php?action=viewlog&logaction=hitsperdate&date=$1&offset=$2
+	RewriteRule ^page/viewlog/hitsperdate/([^/]+)/ index.php?action=viewlog&logaction=hitsperdate&date=$1
 	RewriteRule ^page/viewlog/([^/]+)/([^/]+) index.php?action=viewlog&logaction=$1&offset=$2
 	RewriteRule ^page/viewlog/([^/]+)/ index.php?action=viewlog&logaction=$1
 	RewriteRule ^page/viewlog index.php?action=viewlog

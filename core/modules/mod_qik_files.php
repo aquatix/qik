@@ -2,7 +2,7 @@
 /*
  * Module for getting the contents of the qik site -- flat files method
  * Used for abstrahizing the storage method, so you can transparantly switch between flat files and database
- * version 0.1.03 2006-04-03
+ * version 0.1.04 2006-05-23
  */
 
 function getSections($skel)
@@ -176,7 +176,7 @@ function logGetLoggedItems($skel, $offset, $number)
 }
 
 
-function logGetHitsPerPage($skel, $offset, $number)
+function logGetHitsPerPage($skel, $offset, $number, $datefilter = null)
 {
 	$logfile = fopen($skel['logfile'], 'r');
 	$result = array();
@@ -189,10 +189,16 @@ function logGetHitsPerPage($skel, $offset, $number)
 		$parts = explode(' ', $line);
 		if (isset($parts[2]) && '' != trim($parts[2]) && !isset($result[$parts[2]]))
 		{
-			$result[$parts[2]] = 1;
+			if ((null != $datefilter && $datefilter == substr($parts[1], 1, 10)) || (null == $datefilter))
+			{
+				$result[$parts[2]] = 1;
+			}
 		} else if (isset($parts[2]) && '' != trim($parts[2]))
 		{
-			$result[$parts[2]]++;
+			if ((null != $datefilter && $datefilter == substr($parts[1], 1, 10)) || (null == $datefilter))
+			{
+				$result[$parts[2]]++;
+			}
 		}
 	}
 	fclose($logfile);
