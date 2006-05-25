@@ -1,7 +1,27 @@
 <?php
 /*
- * v0.1.14 2006-04-03
+ * mod_site.php
+ * v0.1.16 2006-05-25
+ * Copyright 2005-2006 mbscholt at aquariusoft.org
  */
+
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+ */
+
+
 
 function build404($skel, $navbar, $message = null)
 {
@@ -112,7 +132,7 @@ function buildSitemap($skel, $sections)
 }
 
 
-function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0)
+function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0, $date = null)
 {
 	$result = '<div class="updatedat">generated @ ' . date('Y-m-d') . "</div>\n";
 	$nrOfHits = getNumberOfHits($skel);
@@ -126,6 +146,21 @@ function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0)
 	} else if ('pages' == $action)
 	{
 		$pages = getHitsPerPage($skel, $offset, $number);
+		$nrOfItems = count($pages);
+	} else if ('hitsperdate' == $action)
+	{
+		if (null == $date)
+		{
+			$date = date("Ymd", time());
+		}
+		if (8 == strlen($date) && intval($date) == $date)
+		{
+			$date = substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
+			$pages = getHitsPerPage($skel, $offset, $number, $date);
+		} else
+		{
+			$pages = null;
+		}
 		$nrOfItems = count($pages);
 	} else if ('404s' == $action)
 	{
@@ -210,9 +245,15 @@ function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0)
 			$odd = !$odd;
 		}
 		$result .= "</table>\n";
-	} else if ('pages' == $action)
+	} else if ('pages' == $action || 'hitsperdate' == $action)
 	{
-		$result .= '<h2>' . dict($skel, 'logpages') . "</h2>\n";
+		$loggeditems = '';
+		$header = '';
+		if ('hitsperdate' == $action)
+		{
+			$header = ' | ' . $date;
+		}
+		$result .= '<h2>' . dict($skel, 'logpages') . $header . "</h2>\n";
 		arsort($pages);
 		$pages = array_slice($pages, $offset, $number);
 		$result .= '<p>Showing items ' . ($offset + 1) . ' to ' . (min($offset + $number, $nrOfItems)) . ' out of ' . $nrOfItems . " total</p>\n";

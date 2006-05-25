@@ -16,6 +16,7 @@
 		$skel['dict']['sitemap'] = 'Sitemap';
 		$skel['dict']['visitslog'] = 'Bezoekerstatistieken';
 		$skel['dict']['logpages'] = 'Hits per pagina';
+		$skel['dict']['loghitsperdate'] = 'Hits per pagina per dag';
 		$skel['dict']['loghits'] = 'Bezochte pagina\'s';
 		$skel['dict']['logips'] = 'Aantal bezochte pagina\'s per IP adres';
 		$skel['dict']['log404s'] = 'Overzicht van 404 fouten';
@@ -51,6 +52,7 @@
 		$skel['dict']['sitemap'] = 'Sitemap';
 		$skel['dict']['visitslog'] = 'Statistics about visitors';
 		$skel['dict']['logpages'] = 'Hits per page';
+		$skel['dict']['loghitsperdate'] = 'Hits per page per date';
 		$skel['dict']['loghits'] = 'Visited pages';
 		$skel['dict']['logips'] = 'Number of visited pages per IP address';
 		$skel['dict']['log404s'] = 'Overview of 404 errors';
