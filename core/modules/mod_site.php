@@ -247,11 +247,11 @@ function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0, $date = n
 	{
 		$loggeditems = '';
 		$result .= '<h2>' . dict($skel, 'logpages') . "</h2>\n";
-		$day_seconds = 24 * 60 * 60;
-		$prev_day = toCleanDate(strtotime($date) - $day_seconds);
-		$next_day = toCleanDate(strtotime($date) + $day_seconds);
 		if ('hitsperdate' == $action)
 		{
+			$day_seconds = 24 * 60 * 60;
+			$prev_day = toCleanDate(strtotime($date) - $day_seconds);
+			$next_day = toCleanDate(strtotime($date) + $day_seconds);
 			$result .= '<p class="mininav">[ <a href="' . $skel['base_uri'] . 'page/viewlog/' . $action . '/' . $prev_day . '/">' . parseDate($prev_day, '%Y%m%d') . '</a> | ' . $date . ' | <a href="' . $skel['base_uri'] . 'page/viewlog/' . $action . '/' . $next_day . '/">' . parseDate($next_day, '%Y%m%d') . '</a> ]</p>';
 		}
 		arsort($pages);
