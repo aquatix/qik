@@ -1,11 +1,9 @@
 <?php
 /*
- * mod_site.php
+ * file: mod_site.php
  * v0.1.16 2006-05-25
  * Copyright 2005-2006 mbscholt at aquariusoft.org
- */
-
-/*
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -155,7 +153,7 @@ function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0, $date = n
 		}
 		if (8 == strlen($date) && intval($date) == $date)
 		{
-			$date = substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
+			$date = parseDate($date, '%Y%m%d');
 			$pages = getHitsPerPage($skel, $offset, $number, $date);
 		} else
 		{
@@ -248,12 +246,14 @@ function buildVisitsLogOverview($skel, $action = 'pages', $offset = 0, $date = n
 	} else if ('pages' == $action || 'hitsperdate' == $action)
 	{
 		$loggeditems = '';
-		$header = '';
+		$result .= '<h2>' . dict($skel, 'logpages') . "</h2>\n";
+		$day_seconds = 24 * 60 * 60;
+		$prev_day = toCleanDate(strtotime($date) - $day_seconds);
+		$next_day = toCleanDate(strtotime($date) + $day_seconds);
 		if ('hitsperdate' == $action)
 		{
-			$header = ' | ' . $date;
+			$result .= '<p class="mininav">[ <a href="' . $skel['base_uri'] . 'page/viewlog/' . $action . '/' . $prev_day . '/">' . parseDate($prev_day, '%Y%m%d') . '</a> | ' . $date . ' | <a href="' . $skel['base_uri'] . 'page/viewlog/' . $action . '/' . $next_day . '/">' . parseDate($next_day, '%Y%m%d') . '</a> ]</p>';
 		}
-		$result .= '<h2>' . dict($skel, 'logpages') . $header . "</h2>\n";
 		arsort($pages);
 		$pages = array_slice($pages, $offset, $number);
 		$result .= '<p>Showing items ' . ($offset + 1) . ' to ' . (min($offset + $number, $nrOfItems)) . ' out of ' . $nrOfItems . " total</p>\n";
