@@ -1,14 +1,30 @@
 <?php
 /*
- * file mod_tagsections.php
- * copyleft Michiel Scholten [see COPYRIGHT file]
- * v0.1.09 2006-03-31
+ * file: mod_tagsections.php
+ *       v0.1.10 2006-05-27
+ * Copyright 2005-2006 mbscholt at aquariusoft.org
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+
  */
 
 function processTags($skel, $body)
 {
 	$body = expandTags($skel, $body);
 	$body = str_replace("src=\"image", "src=\"" . $skel["base_uri"] . "image", $body);
+	$body = str_replace("href=\"image", "href=\"" . $skel["base_uri"] . "image", $body);
 	$body = str_replace("href=\"files", "href=\"" . $skel["base_uri"] . "files", $body);
 	$body = str_replace("href=\"page", "href=\"" . $skel["base_uri"] . "page", $body);
 	return $body;
