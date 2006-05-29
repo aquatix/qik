@@ -9,6 +9,9 @@ else
 	cp -a core/* qik_root/
 	cp -a core/.htaccess qik_root/
 	cp -a example_site/* qik_root/
-	tar cjf backup/$1_release.tar.bz2 qik_root
+	#find qik_root/*| grep ".svn"|rm -rf 
+	#find qik_root/* | xargs -n1 -i"{}" rm -f -v "{}"
+	find qik_root/* | xargs -n1 -i"{}" rm -f "{}"
+	tar cjf $1_release.tar.bz2 qik_root
 fi
 
