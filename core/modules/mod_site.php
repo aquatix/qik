@@ -1,7 +1,7 @@
 <?php
 /*
  * file: mod_site.php
- * v0.1.16 2006-05-25
+ * v0.1.17 2006-05-29
  * Copyright 2005-2006 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -105,7 +105,13 @@ function buildSitemap($skel, $sections)
 			if ($key[0] != "#" && getValue($sections[$i]) != "")	// '#' denotes comment
 			{
 				$result .= "\t<li><a href=\"" . $skel["base_uri"] . "page/" . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
-				$subsections = file("site/sections/" . $key . ".desc");
+				if ('sitemap' == $key)
+				{
+					$subsections = false;
+				} else
+				{
+					$subsections = file("site/sections/" . $key . ".desc");
+				}
 				if ($subsections != false)
 				{
 					$result .= "\t\t<ul>\n";

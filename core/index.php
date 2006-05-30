@@ -25,7 +25,7 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.1.16 2006-04-03';
+$skel['version'] = '0.1.17 2006-05-28';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
@@ -81,11 +81,11 @@ if (null == $sections)
 	echo 'Can\'t read site description file!';
 	exit;
 }
+$sections[count($sections)] = 'sitemap=' . dict($skel, 'sitemap');
 
 /*** Getting base stuff ***/
 
 /* User should provide the site/pagetemplate.php */
-$navbar = buildNav($skel, $sections);
 
 $section = getRequestParam('section', null);
 $page = getRequestParam('page', null);
@@ -96,18 +96,13 @@ $action = getRequestParam('action', null);
  * rewrite http://example.com/?section=w00t&page=blah to
  * http://example.com/page/w00t/blah/
  */
-//$url_pieces = parse_url(getenv('REQUEST_URI'));
-//if ('/index.php' == substr($url_pieces['path'], 0, 10) && isset($url_pieces['query']) && '' != $url_pieces['query'])
 if (isset($url_pieces['query']) && '' != $url_pieces['query'])
 {
 	/* Redirect. Check for url injections */
 	header('HTTP/1.1 301 Moved Permanently');
-	//$redir = 'http://' . $skel['hostname'] . $skel['base'] . 'page/' . $section_name . '/';
-	//$redir = 'http://aquariusoft.org' . $skel['base_uri'] . 'page/' . $section . '/';
 	$redir = $skel['base_server'] . $skel['base_uri'] . 'page/' . $section . '/';
 	if ($section == null || $section == '')
 	{
-		//$redir = 'http://aquariusoft.org/';
 		$redir = $skel['base_server'] . '/';
 	} else if ($page != NULL)
 	{
@@ -116,43 +111,18 @@ if (isset($url_pieces['query']) && '' != $url_pieces['query'])
 	header('Location: ' . $redir);
 	addToLog($skel, $section, $page, 301);
 	exit;
-//} else if (substr($url_pieces['path'], strlen($url_pieces['path']) - 6, 6) == '/page/')
 } else if ($url_pieces['path'] == '/page/')
 {
 	header('HTTP/1.1 301 Moved Permanently');
-	//$redir = 'http://aquariusoft.org/';
 	$redir = $skel['base_server'] . '/';
 	header('Location: ' . $redir);
 	addToLog($skel, '', '', 301);
 	exit;
 }
 
-if ('sitemap' == $action)
-{
-	$body = '<h1>' . dict($skel, 'sitemap') . "</h1>\n";
-	$body .= buildSitemap($skel, $sections);
-	addToLog($skel, 'special', 'sitemap', 200);
-	echo processTags($skel, buildPage($skel, dict($skel, 'sitemap'), $navbar, null, $body));
-	exit;
-} else if ('viewlog' == $action)
-{
-	$logaction = getRequestParam('logaction', 'pages');
-	$offset = getRequestParam('offset', 0);
-	$body = '<h1>' . dict($skel, 'visitslog') . "</h1>\n";
-
-	$skel['section'] = dict($skel, 'visitslog');
-	$subsections = getLogTypes($skel);
-	$subnav = buildSubnav($skel, 'viewlog', $subsections);
-
-	$date = getRequestParam('date', null);
-	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
-	addToLog($skel, 'special', 'viewlog', 200);
-	echo processTags($skel, buildPage($skel, dict($skel, 'visitslog'), $navbar, $subnav, $body));
-	exit;
-}
-
 if ($section == 'error')
 {
+	$navbar = buildNav($skel, $sections);
 	if ($page == '404')
 	{
 		addToLog($skel, $section, $page, 404);
@@ -161,69 +131,99 @@ if ($section == 'error')
 		  {
 		 */
 	} else {
-		//echo buildPage($skel, dict($skel, 'unknown_server_error'), $navbar, $subnav, $body);
 		addToLog($skel, $section, $page, 500);
 		echo buildHTTPErrorPage($skel, $navbar, $page);
 	}
 	exit;
 }
 
-
-if ($section == null)
+if ('sitemap' == $action)
 {
-	$section = getItem($sections, 0);
-}
-
-$section_name = getName($sections, $section);
-if ($section_name == null)
+	$body = '<h1>' . dict($skel, 'sitemap') . "</h1>\n";
+	$body .= buildSitemap($skel, $sections);
+	addToLog($skel, 'special', 'sitemap', 200);
+	$page_name = dict($skel, 'sitemap');
+	$subnav = null;
+	$skel['section'] = 'sitemap';
+	//$skel['sectionname'] = $page_name;
+} else if ('viewlog' == $action)
 {
-	addToLog($skel, $section, $page, 404);
-	echo build404($skel, $navbar, dict($skel, 'section_not_found'));
-	exit;
-}
+	$logaction = getRequestParam('logaction', 'pages');
+	$offset = getRequestParam('offset', 0);
+	$body = '<h1>' . dict($skel, 'visitslog') . "</h1>\n";
 
-$skel['section'] = $section_name;
+	$skel['section'] = 'viewlog';
+	$subsections = getLogTypes($skel);
+	$subnav = buildSubnav($skel, 'viewlog', $subsections);
+	$page_name = dict($skel, 'visitslog');
+	$skel['sectionname'] = $page_name;
 
-$subsections = getSubsections($skel, $section);
-$subnav = null;
-if (null != $subsections)
-{
-	$subnav = buildSubnav($skel, $section, $subsections);
-}
-
-if (null == $page)
-{
-	/* If no page is specified, get first page in the sub category list */
-	$page = getItem($subsections, 0);
-}
-
-$content = getFileContents($skel, $section, $page);
-if (null == $content)
-{
-	addToLog($skel, $section, $page, 404);
-	echo build404($skel, $navbar, dict($skel, 'page_x_not_found', $page));
-	exit;
-}
-
-$page_name = '';
-if ($page != null)
-{
-	$page_name = getName($subsections, $page);
+	$date = getRequestParam('date', null);
+	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
+	addToLog($skel, 'special', 'viewlog', 200);
 } else
 {
-	$page_name = $section_name;
+	if ($section == null)
+	{
+		$section = getItem($sections, 0);
+	}
+
+	$section_name = getName($sections, $section);
+	if ($section_name == null)
+	{
+		addToLog($skel, $section, $page, 404);
+		echo build404($skel, $navbar, dict($skel, 'section_not_found'));
+		exit;
+	}
+
+	$skel['section'] = $section;
+	$skel['sectionname'] = $section_name;
+
+	$subsections = getSubsections($skel, $section);
+	if (null == $page)
+	{
+		/* If no page is specified, get first page in the sub category list */
+		$page = getItem($subsections, 0);
+	}
+
+	$skel['page'] = $page;
+
+	$subnav = null;
+	if (null != $subsections)
+	{
+		$subnav = buildSubnav($skel, $section, $subsections);
+	}
+
+	$content = getFileContents($skel, $section, $page);
+	if (null == $content)
+	{
+		addToLog($skel, $section, $page, 404);
+		echo build404($skel, $navbar, dict($skel, 'page_x_not_found', $page));
+		exit;
+	}
+
+	$page_name = '';
+	if ($page != null)
+	{
+		$page_name = getName($subsections, $page);
+	} else
+	{
+		$page_name = $section_name;
+	}
+
+	$body = '';
+	if (trim($page_name) != '')
+	{
+		$body = '<h1>' . $page_name . "</h1>\n";
+	}
+	$body .= $content;
+
+	/* Rebuild navbar, now with highlighted section */
+	//$navbar = buildNav($skel, $sections);
+
+	addToLog($skel, $section, $page, 200);
 }
 
-$body = '';
-if (trim($page_name) != '')
-{
-	$body = '<h1>' . $page_name . "</h1>\n";
-}
-$body .= $content;
-
-/* Rebuild navbar, now with highlighted section */
 $navbar = buildNav($skel, $sections);
-
-addToLog($skel, $section, $page, 200);
 echo processTags($skel, buildPage($skel, $page_name, $navbar, $subnav, $body));
 ?>
