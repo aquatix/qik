@@ -1,6 +1,6 @@
 <?php
 /*
- * v0.1.03 2006-05-26
+ * v0.1.04 2006-06-01
  */
 
 /*
@@ -54,23 +54,33 @@ function buildPage($skel, $page_title, $navbar, $subnavbar, $body)
  */
 function buildNav($skel, $sections)
 {
-	$result = "";
+	$result = '';
+	/* If you want a delimiter between the links, add it to $divider */
+	$divider = ' ';
 	for ($i = 0; $i < count($sections); $i++)
 	{
-		if (trim($sections[$i]) != "")
+		if ('' != trim($sections[$i]))
 		{
 			$sectionkey = getKey($sections[$i]);
 			$section = getValue($sections[$i]);
-			if ($sectionkey[0] != "#")	// '#' denotes a comment in the description file
+			if ('#' != $sectionkey[0])	// '#' denotes a comment in the description file
 			{
 				/* If you want a delimiter between the links, add it here */
-				$result .= " <a href=\"" . $skel["base_uri"] . "page/" . $sectionkey . "/\">" . trim($section) . "</a>";
-				//$result .= "<a href=\"" . $skel["base_uri"] . "page/" . $sectionkey . "/\">" . trim($section) . "</a> | ";
+				if (isset($skel['section']) && $sectionkey == $skel['section'])
+				{
+					$active = ' class="highlight"';
+				} else
+				{
+					$active = '';
+				}
+				if (count($sections) - 1 == $i)
+				{
+					$divider = '';
+				}
+				$result .= '<a href="' . $skel['base_uri'] . 'page/' . $sectionkey . '/"' . $active . '>' . trim($section) . '</a>' . $divider;
 			}
 		}
 	}
-	/* If you want a delimiter between the links, add it here */
-	$result .= " <a href=\"" . $skel["base_uri"] . "page/sitemap/\">Sitemap</a>";
 	return $result;
 }
 
@@ -81,31 +91,35 @@ function buildNav($skel, $sections)
 function buildSubnav($skel, $section, $subsections)
 {
 	$result = "\t<div class=\"subnavbar\">\n";
-	$result .= "\t<h2>" . $skel["section"] . "</h2>\n";
+	$result .= "\t<h2>" . $skel['sectionname'] . "</h2>\n";
 	$result .= "\t\t<ul>\n";
 	for ($i = 0; $i < count($subsections); $i++)
 	{
-		if (trim($subsections[$i]) != "")
+		if ('' != trim($subsections[$i]))
 		{
-			$parts = explode("=", $subsections[$i]);
-			if ($parts[0][0] != "#" && trim($parts[1]) != "")	// '#' denotes a comment in the description file
+			$pagekey = getKey($subsections[$i]);
+			$page = getValue($subsections[$i]);
+			if ('#' != $pagekey[0] && '' != trim($page))	// '#' denotes a comment in the description file
 			{
-				$result .= "\t\t\t<li><a href=\"" . $skel["base_uri"] . "page/" . $section . "/" . $parts[0] . "/\">" . trim($parts[1]) . "</a></li>\n";
+				if (isset($skel['page']) && $pagekey == $skel['page'])
+				{
+					$active = ' class="highlight"';
+				} else
+				{
+					$active = '';
+				}
+				$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . 'page/' . $section . '/' . $pagekey . '/"' . $active . '>' . trim($page) . "</a></li>\n";
 			}
 		}
 	}
 	$result .= "\t\t</ul>\n";
-	//$result .= "\t</div>\n";
-	//$result .= "\t<div class=\"subnavbar\">\n";
 	$result .= "\t\t<ul class=\"info\">\n";
 	$result .= "\t\t\t<li><form action=\"http://www.google.com/search\" method=\"get\"><input type=\"hidden\" name=\"q\" value=\"site:aquariusoft.org\" /><input type=\"text\" class=\"searchfield\" name=\"q\" size=\"20\" /><input type=\"submit\" value=\"find\" /></form></li>\n";
-	$result .= "\t\t</ul>\n";
+	$result .= "\t\t</ul>\n"; 
 	$result .= "\t\t<ul class=\"info\">\n";
 	$result .= "\t\t\t<li><a href=\"http://www.mozilla.com/firefox/\" title=\"Get Firefox - Web Browsing Redefined [and take back the web]\"><img src=\"images/firefox_pixel.png\" alt=\"Get Firefox\"/></a></li>\n";
 	$result .= "\t\t\t<li><a href=\"http://www.mozilla.com/thunderbird/\" title=\"Get Thunderbird and reclaim your inbox!\"><img src=\"images/thunderbird_pixel.png\" alt=\"Get Thunderbird\"/></a></li>\n";
 	$result .= "\t\t</ul>\n";
-	//$result .= "\t</div>\n";
-	//$result .= "\t<div class=\"subnavbar\">\n";
 	$result .= "\t\t<ul class=\"info\">\n";
 	$result .= "\t\t\t<li><a href=\"http://aquariusoft.org/page/html/qik/\">build with qik</a></li>\n";
 	$result .= "\t\t</ul>\n";
