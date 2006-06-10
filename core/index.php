@@ -25,12 +25,12 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.1.17 2006-05-28';
+$skel['version'] = '0.1.18 2006-06-10';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
-error_reporting( E_ALL );
-//error_reporting(0);	// set all off
+//error_reporting( E_ALL );
+error_reporting(0);	// set all off
 
 /* Website configuration */
 include_once('config.php');
@@ -154,9 +154,9 @@ if ('sitemap' == $action)
 
 	$skel['section'] = 'viewlog';
 	$subsections = getLogTypes($skel);
-	$subnav = buildSubnav($skel, 'viewlog', $subsections);
 	$page_name = dict($skel, 'visitslog');
 	$skel['sectionname'] = $page_name;
+	$subnav = buildSubnav($skel, 'viewlog', $subsections);
 
 	$date = getRequestParam('date', null);
 	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
