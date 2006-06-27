@@ -352,4 +352,24 @@ function dict($skel, $key, $value = null)
 		return 'DICTIONARY: key "' . $key . '" not found. Maybe not be translated?';
 	}
 }
+
+
+/* Validate the language option from the url */
+function validateLanguage($languagekey)
+{
+	return $languagekey;
+}
+
+
+function getLanguageKey($skel)
+{
+	if (true == $skel['multilanguage'])
+	{
+		return $skel['language'] . '/';
+	} else
+	{
+		return '';
+	}
+}
+
 ?>
