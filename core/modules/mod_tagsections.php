@@ -62,6 +62,9 @@ function expandTags($skel, $body)
 			} else if ($keyvalue[0] == "icon")
 			{
 				$result .= getIcon($skel, $keyvalue[1]);
+			} else if ($keyvalue[0] == "flag")
+			{
+				$result .= getFlag($skel, $keyvalue[1]);
 			} else if ($keyvalue[0] == "gallery")
 			{
 				$result .= getGallery($skel, $keyvalue[1]);
@@ -181,6 +184,13 @@ function getIcon($skel, $key)
 {
 	// @TODO: check for existance of the file
 	return "<img src=\"images/icons/" . $key . ".png\" alt=\"" . $key . "\" height=\"24\" width=\"24\" />";
+}
+
+
+function getFlag($skel, $key)
+{
+	// @TODO: check for existance of the file
+	return "<img src=\"images/icons/flags/" . $key . ".png\" alt=\"" . $key . "\" height=\"11\" width=\"16\" />";
 }
 
 
