@@ -7,7 +7,7 @@
 
 function getSections($skel)
 {
-	$sections = file('site/section.desc');
+	$sections = file('site/' . getLanguageKey($skel) . 'section.desc');
 	if (false == $sections)
 	{
 		$sections = null;
@@ -18,7 +18,7 @@ function getSections($skel)
 
 function getSubsections($skel, $section)
 {
-	$subsections = file('site/sections/' . $section . '.desc');
+	$subsections = file('site/' . getLanguageKey($skel) . 'sections/' . $section . '.desc');
 	if (false == $subsections)
 	{
 		$subsections = null;
@@ -32,10 +32,10 @@ function getFileContents($skel, $section, $page)
 	$content = null;
 	if (null != $page && '' != $page)
 	{
-		$content = file_get_contents('site/pages/' . $section . '_' . $page . '.html');
+		$content = file_get_contents('site/' . getLanguageKey($skel) . 'pages/' . $section . '_' . $page . '.html');
 	} else
 	{
-		$content = file_get_contents('site/pages/' . $section . '.html');
+		$content = file_get_contents('site/' . getLanguageKey($skel) . 'pages/' . $section . '.html');
 	}
 	return $content;
 }
@@ -43,13 +43,13 @@ function getFileContents($skel, $section, $page)
 
 function getTile($skel, $key)
 {
-	return file_get_contents("site/tiles/" . $key . ".html");
+	return file_get_contents('site/' . getLanguageKey($skel) . 'tiles/' . $key . '.html');
 }
 
 
 function getFile($skel, $kind, $key)
 {
-	return file("site/" . $kind . "/" . $key . ".desc");
+	return file('site/' . getLanguageKey($skel) . $kind . '/' . $key . '.desc');
 }
 
 
