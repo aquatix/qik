@@ -25,12 +25,12 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.1.18 2006-06-10';
+$skel['version'] = '0.1.19 2006-06-25';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
-//error_reporting( E_ALL );
-error_reporting(0);	// set all off
+error_reporting( E_ALL );
+//error_reporting(0);	// set all off
 
 /* Website configuration */
 include_once('config.php');
@@ -55,8 +55,23 @@ include_once('modules/mod_tagsections.php');
 /* Module for logging support */
 include_once('modules/mod_logging.php');
 
-include_once('site/pagetemplate.php');
+$language = validateLanguage(getRequestParam('language', null));
+/*
+if ('' == $language)
+{
+	$language = $skel['language'];
+} else
+{
+	$skel['language'] = $language;
+}
+*/
+if ('' != $language)
+{
+	$skel['language'] = $language;
+	$skel['baselanguage'] = $language;
+}
 
+include_once('site/' . getLanguageKey($skel) . 'pagetemplate.php');
 
 $skel['base_uri'] = dirname($_SERVER['PHP_SELF']) . '/';
 if ('//' == $skel['base_uri'])
@@ -64,6 +79,8 @@ if ('//' == $skel['base_uri'])
 	/* Site is located in the root, compensate for the extra slash */
 	$skel['base_uri'] = '/';
 }
+//$skel['base_uri'] .= getLanguageKey($skel);
+
 $url_pieces = parse_url(getenv('SCRIPT_URI'));
 $skel['base_server'] = '';
 if (!isset($url_pieces['scheme']))
@@ -78,7 +95,7 @@ if (!isset($url_pieces['scheme']))
 $sections = getSections($skel);
 if (null == $sections)
 {
-	echo 'Can\'t read site description file!';
+	echo 'Qik error: Can\'t read site description file!';
 	exit;
 }
 $sections[count($sections)] = 'sitemap=' . dict($skel, 'sitemap');
