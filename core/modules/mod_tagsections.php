@@ -1,7 +1,7 @@
 <?php
 /*
  * file: mod_tagsections.php
- *       v0.1.10 2006-05-27
+ *       v0.1.11 2006-09-18
  * Copyright 2005-2006 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,7 @@ function processTags($skel, $body)
 	$body = str_replace("href=\"image", "href=\"" . $skel["base_uri"] . "image", $body);
 	$body = str_replace("href=\"files", "href=\"" . $skel["base_uri"] . "files", $body);
 	$body = str_replace("href=\"page", "href=\"" . $skel["base_uri"] . "page", $body);
+	//$body = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $body);
 	return $body;
 }
 
@@ -39,7 +40,7 @@ function expandTags($skel, $body)
 {
 	//print_r(getTagNames($body));
 	//$body = stripTags($body);
-	$result = "";
+	$result = '';
 	$pieces = explode("@@@", $body);
 	for ($i = 0; $i < count($pieces); $i++)
 	{
@@ -118,18 +119,35 @@ function stripTags($body)
 }
 
 
+/*
+ * Get all items in the datafile
+ */
 function getItems($skel, $kind, $key)
 {
 	$parts = explode(":", $key);
 
-	if ($parts[0] != "")
+	if ('' != $parts[0])
 	{
 		$datafile = getFile($skel, $kind, $parts[0]);
 		if ($datafile != null)
 		{
-			$items = "";
+			$items = '';
+			/* Clean up array: skip empty lines and lines starting with # */
+			$i = 0;
+			while ($i < count($datafile))
+			{
+				if ( isset($datafile[$i]) && ( ('' == trim($datafile[$i])) || ('#' == substr(ltrim($datafile[$i]), 0, 1)) ) )
+				{
+					unset($datafile[$i]);
+				} else
+				{
+					$i++;
+				}
+			}
+			/* Look whether we only want a slice of it */
 			if (isset($parts[2]) && isset($parts[1]))
 			{
+				/* Only return the slice of items that where asked for */
 				$offset = $parts[1] - 1;
 				$nr = $parts[2] - $offset;
 				$datafile = array_slice($datafile, $offset, $nr);
@@ -194,7 +212,7 @@ function getFlag($skel, $key)
 }
 
 
-function getGallery($skel, $key)
+function getGallery_old($skel, $key)
 {
 	$items = getItems($skel, "gallery", $key);
 	if (!is_array($items))
@@ -203,10 +221,10 @@ function getGallery($skel, $key)
 		return $items;
 	}
 
-	$result = "";
+	$result = '';
 	for ($i = 0; $i < count($items); $i++)
 	{
-		if (trim($items[$i]) != "")
+		if ('' != trim($items[$i]))
 		{
 			$title = getKey($items[$i]);
 			$file = getValue($items[$i]);
@@ -216,4 +234,36 @@ function getGallery($skel, $key)
 	}
 	return $result;
 }
+
+
+function getGallery($skel, $key)
+{
+	$items = getItems($skel, "gallery", $key);
+	if (!is_array($items))
+	{
+		/* Something went wrong, return the message */
+		return $items;
+	}
+
+	$result = '';
+	for ($i = 0; $i < count($items); $i++)
+	{
+		if ('' != trim($items[$i]))
+		{
+			$title = getKey($items[$i]);
+			$file = getValue($items[$i]);
+			//$result .= "<img src=\"images/gallery/" . $file . "\" alt=\"" . $title . "\" /><br />\n";
+			$filename = 'images/gallery/thumbs/' . str_replace('/', '_', $file);
+			$image_name = realpath(dirname(__FILE__) . '/../') . '/' . $filename;
+			if(!file_exists($image_name)) 
+			{
+				$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $file;
+			}
+			$result .= "<div class=\"galleryimage\"><a href=\"images/gallery/" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<p><em>" . $title . "</em></p>\n</div>\n";
+		}
+	}
+	//$result = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $result);
+	return $result;
+}
+
 ?>

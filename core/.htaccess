@@ -22,6 +22,8 @@
 	RewriteRule ^page/viewlog/([^/]+)/([^/]+) index.php?action=viewlog&logaction=$1&offset=$2
 	RewriteRule ^page/viewlog/([^/]+)/ index.php?action=viewlog&logaction=$1
 	RewriteRule ^page/viewlog index.php?action=viewlog
+	RewriteRule ^viewimage/thumb/(.*) image.php?action=makethumb&filename=$1
+	RewriteRule ^viewimage/gallery/thumb/(.*) image.php?action=makethumb&kind=gallery&filename=$1
 	#RewriteRule ^page/([A-z0-9]+)/([A-z0-9]+) index.php?section=$1&page=$2
 	RewriteRule ^page/([^/]+)/([^/]+) index.php?section=$1&page=$2
 	#RewriteRule ^page/([A-z0-9]+) index.php?section=$1

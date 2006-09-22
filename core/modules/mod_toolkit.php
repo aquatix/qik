@@ -2,7 +2,7 @@
 /*
  * file: mod_toolkit.php
  *       Useful functions for doing operations on text, converting items etc
- *       v0.1.09 2006-05-26
+ *       v0.1.10 2006-09-18
  * Copyright 2005-2006 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -476,6 +476,90 @@ function getFilename($path)
 {
 	$parts = explode("/", $path);
 	return $parts[count($parts)-1];
+}
+
+
+/*
+ * Create thumbnail from $o_file, and store it in $thumbfilename when set
+ *
+ * Adapted from:
+ * Source: http://nl2.php.net/getimagesize
+ * webmaster at WWW.ELLESSEWEB.NET
+ * 26-Oct-2005 02:10
+ * This is a useful function to display a thumbnail of a whatever image.
+ * This piece of code has been lightly modified from an example found on <b>NYPHP.ORG</B>.
+ * This function can build a thumbnail of any size you want and display it on your browser!
+ * Hope it can be useful for you guys!
+ */
+function makeThumbnail($o_file, $t_ht = 100, $thumbfilename = null) {
+	$image_info = getImageSize($o_file) ; // see EXIF for faster way
+
+	switch ($image_info['mime'])
+	{
+		case 'image/gif':
+			if (imagetypes() & IMG_GIF)
+			{ // not the same as IMAGETYPE
+				$o_im = imageCreateFromGIF($o_file) ;
+			} else
+			{
+				$ermsg = 'GIF images are not supported<br />';
+			}
+			break;
+		case 'image/jpeg':
+			if (imagetypes() & IMG_JPG)
+			{
+				$o_im = imageCreateFromJPEG($o_file) ;
+			} else
+			{
+				$ermsg = 'JPEG images are not supported<br />';
+			}
+			break;
+		case 'image/png':
+			if (imagetypes() & IMG_PNG)
+			{
+				$o_im = imageCreateFromPNG($o_file) ;
+			} else
+			{
+				$ermsg = 'PNG images are not supported<br />';
+			}
+			break;
+		case 'image/wbmp':
+			if (imagetypes() & IMG_WBMP)
+			{
+				$o_im = imageCreateFromWBMP($o_file) ;
+			} else
+			{
+				$ermsg = 'WBMP images are not supported<br />';
+			}
+			break;
+		default:
+			$ermsg = $image_info['mime'].' images are not supported<br />';
+			break;
+	}
+
+	if (!isset($ermsg)) {
+		$o_wd = imagesx($o_im) ;
+		$o_ht = imagesy($o_im) ;
+		// thumbnail width = target * original width / original height
+		$t_wd = round($o_wd * $t_ht / $o_ht) ;
+
+		$t_im = imageCreateTrueColor($t_wd,$t_ht);
+
+		imageCopyResampled($t_im, $o_im, 0, 0, 0, 0, $t_wd, $t_ht, $o_wd, $o_ht);
+
+		/* Safe to file if requested */
+		if (null != $thumbfilename)
+		{
+			//imageJPEG($t_im, $thumbfilename, 100);
+			imageJPEG($t_im, $thumbfilename, 80);
+		}
+
+		imageJPEG($t_im);
+
+		imageDestroy($o_im);
+		imageDestroy($t_im);
+	}
+	return isset($ermsg)?$ermsg:NULL;
 }
 
 ?>
