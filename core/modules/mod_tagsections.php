@@ -262,7 +262,7 @@ function getGallery($skel, $key)
 			$file = getValue($items[$i]);
 			if ('http' != substr($file, 0, 4))
 			{
-				$file .= 'images/gallery/';
+				$file = 'images/gallery/' . $file;
 			}
 			//$result .= "<img src=\"images/gallery/" . $file . "\" alt=\"" . $title . "\" /><br />\n";
 			//$filename = 'images/gallery/thumbs/' . str_replace('/', '_', $file);
