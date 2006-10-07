@@ -124,7 +124,7 @@ function stripTags($body)
  */
 function getItems($skel, $kind, $key)
 {
-	$parts = explode(":", $key);
+	$parts = explode(':', $key);
 
 	if ('' != $parts[0])
 	{
@@ -175,17 +175,17 @@ function getItems($skel, $kind, $key)
  */
 function getNews($skel, $key)
 {
-	$items = getItems($skel, "news", $key);
+	$items = getItems($skel, 'news', $key);
 	if (!is_array($items))
 	{
 		/* Something went wrong, return the message */
 		return $items;
 	}
 
-	$result = "";
+	$result = '';
 	for ($i = 0; $i < count($items); $i++)
 	{
-		if (trim($items[$i]) != "")
+		if ('' != trim($items[$i]))
 		{
 			$title = getKey($items[$i]);
 			$content = getValue($items[$i]);
@@ -238,11 +238,19 @@ function getGallery_old($skel, $key)
 
 function getGallery($skel, $key)
 {
-	$items = getItems($skel, "gallery", $key);
+	$items = getItems($skel, 'gallery', $key);
 	if (!is_array($items))
 	{
 		/* Something went wrong, return the message */
 		return $items;
+	}
+
+	/* Get gallery name */
+	$galleryname = null;
+	$parts = explode(':', $key);
+	if ('' != $parts[0])
+	{
+		$galleryname = $parts[0];
 	}
 
 	$result = '';
@@ -252,14 +260,21 @@ function getGallery($skel, $key)
 		{
 			$title = getKey($items[$i]);
 			$file = getValue($items[$i]);
+			if ('http' != substr($file, 0, 4))
+			{
+				$file .= 'images/gallery/';
+			}
 			//$result .= "<img src=\"images/gallery/" . $file . "\" alt=\"" . $title . "\" /><br />\n";
-			$filename = 'images/gallery/thumbs/' . str_replace('/', '_', $file);
-			$image_name = realpath(dirname(__FILE__) . '/../') . '/' . $filename;
+			//$filename = 'images/gallery/thumbs/' . str_replace('/', '_', $file);
+			//$image_name = realpath(dirname(__FILE__) . '/../') . '/' . $filename;
+			$filename = 'images/gallery/thumbs/' . $galleryname . '_' . ($i + 1) . '.jpg';
+			$image_name = realpath(dirname(__FILE__)) . '/../images/gallery/thumbs/'. $galleryname . '_' . ($i + 1) . '.jpg';
 			if(!file_exists($image_name)) 
 			{
-				$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $file;
+				//$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $file;
+				$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $galleryname . '/' . ($i + 1) . '/';
 			}
-			$result .= "<div class=\"galleryimage\"><a href=\"images/gallery/" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<p><em>" . $title . "</em></p>\n</div>\n";
+			$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<p><em>" . $title . "</em></p>\n</div>\n";
 		}
 	}
 	//$result = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $result);
