@@ -25,7 +25,7 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.1.19 2006-06-25';
+$skel['version'] = '0.1.20 2006-10-07';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
@@ -178,6 +178,27 @@ if ('sitemap' == $action)
 	$date = getRequestParam('date', null);
 	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
 	addToLog($skel, 'special', 'viewlog', 200);
+} else if ('makethumb' == $action)
+{
+	$kind = getRequestParam('kind', null);
+	$filename = null;
+	if ('gallery' == $kind)
+	{
+		$gallery = getRequestParam('gallery', null);
+		$file = getRequestParam('file', -1);
+		//$galleryItems = getGallery($skel, $gallery . ':' . $file . ':1');
+		$galleryItems = getItems($skel, 'gallery', $gallery . ':' . $file . ':' . $file);
+		$filename = getValue($galleryItems[0]);
+		if ('http' != substr($filename, 0, 4))
+		{
+			$filename = realpath(dirname(__FILE__)) . '/images/gallery/' . $filename;
+		}
+		$destfile = realpath(dirname(__FILE__)) . '/images/gallery/thumbs/'. $gallery . '_' . $file . '.jpg';
+		//echo $filename . "\n" . $destfile;
+	}
+	header("Content-type: image/jpeg");
+	makeThumbnail($filename, 80, $destfile);
+	exit;
 } else
 {
 	if ($section == null)
