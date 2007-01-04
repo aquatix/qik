@@ -25,7 +25,7 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.1.20 2006-10-07';
+$skel['version'] = '0.1.21 2007-01-01';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
@@ -210,7 +210,8 @@ if ('sitemap' == $action)
 	if ($section_name == null)
 	{
 		addToLog($skel, $section, $page, 404);
-		echo build404($skel, $navbar, dict($skel, 'section_not_found'));
+		//echo build404($skel, $navbar, dict($skel, 'section_not_found'));
+		echo build404($skel, null, dict($skel, 'section_not_found'));
 		exit;
 	}
 
@@ -236,7 +237,7 @@ if ('sitemap' == $action)
 	if (null == $content)
 	{
 		addToLog($skel, $section, $page, 404);
-		echo build404($skel, $navbar, dict($skel, 'page_x_not_found', $page));
+		echo build404($skel, null, dict($skel, 'page_x_not_found', $page));
 		exit;
 	}
 
