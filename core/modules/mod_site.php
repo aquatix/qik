@@ -94,7 +94,7 @@ function getValue($item)
 
 function buildSitemap($skel, $sections)
 {
-	$result = "<div class=\"updatedat\">generated @ " . date("Y-m-d") . "</div>\n";
+	$result = '<div class="updatedat">generated @ ' . date('Y-m-d') . "</div>\n";
 	$result .= "<ul>\n";
 
 	for ($i = 0; $i < count($sections); $i++)
@@ -104,13 +104,13 @@ function buildSitemap($skel, $sections)
 			$key = getKey($sections[$i]);
 			if ($key[0] != "#" && getValue($sections[$i]) != "")	// '#' denotes comment
 			{
-				$result .= "\t<li><a href=\"" . $skel["base_uri"] . "page/" . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
+				$result .= "\t<li><a href=\"" . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
 				if ('sitemap' == $key)
 				{
 					$subsections = false;
 				} else
 				{
-					$subsections = file("site/sections/" . $key . ".desc");
+					$subsections = file('site/' . getLanguageKey($skel) . 'sections/' . $key . '.desc');
 				}
 				if ($subsections != false)
 				{

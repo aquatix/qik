@@ -481,6 +481,7 @@ function getFilename($path)
 
 /*
  * Create thumbnail from $o_file, and store it in $thumbfilename when set
+ * Output it to stdout too
  *
  * Adapted from:
  * Source: http://nl2.php.net/getimagesize
