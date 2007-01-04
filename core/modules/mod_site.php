@@ -1,7 +1,7 @@
 <?php
 /*
  * file: mod_site.php
- * v0.1.17 2006-05-29
+ * v0.1.19 2007-01-03
  * Copyright 2005-2006 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -99,10 +99,10 @@ function buildSitemap($skel, $sections)
 
 	for ($i = 0; $i < count($sections); $i++)
 	{
-		if (trim($sections[$i]) != "")
+		if ('' != trim($sections[$i]))
 		{
 			$key = getKey($sections[$i]);
-			if ($key[0] != "#" && getValue($sections[$i]) != "")	// '#' denotes comment
+			if ('#' != $key[0] && '' != getValue($sections[$i]))	// '#' denotes comment
 			{
 				$result .= "\t<li><a href=\"" . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
 				if ('sitemap' == $key)
@@ -117,12 +117,12 @@ function buildSitemap($skel, $sections)
 					$result .= "\t\t<ul>\n";
 					for ($j = 0; $j < count($subsections); $j++)
 					{
-						if (trim($subsections[$j]) != "")
+						if ('' != trim($subsections[$j]))
 						{
 							$subkey = getKey($subsections[$j]);
-							if ($subkey[0] != "#" && getValue($subsections[$j]) != "")        // '#' denotes comment
+							if ('#' != $subkey[0] && '' != getValue($subsections[$j]))        // '#' denotes comment
 							{
-								$result .= "\t\t\t<li><a href=\"" . $skel["base_uri"] . "page/" . $key . "/" . $subkey . "/\">" . getValue($subsections[$j]) . "</a></li>\n";
+								$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . getValue($subsections[$j]) . "</a></li>\n";
 							}
 						}
 					}
