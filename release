@@ -5,13 +5,40 @@ then
 	echo "  release <version>"
 	echo ""
 else
-	rm -r qik_root/*
-	cp -a core/* qik_root/
-	cp -a core/.htaccess qik_root/
-	cp -a example_site/* qik_root/
-	#find qik_root/*| grep ".svn"|rm -rf 
-	#find qik_root/* | xargs -n1 -i"{}" rm -f -v "{}"
-	find qik_root/* | xargs -n1 -i"{}" rm -f "{}"
-	tar cjf $1_release.tar.bz2 qik_root
+	if [ ! -e qik_root ];
+	then
+		mkdir qik_root
+	fi
+	if [ ! -d qik_root ];
+	then
+		echo "qik_root is not a directory! Please remove it"
+	else
+		echo "Normal version:"
+		rm -r qik_root/* 2> /dev/null
+		cp -a core/* qik_root/ 2> /dev/null
+		cp -a core/.htaccess qik_root/ 2> /dev/null
+		cp -a example_site/* qik_root/ 2> /dev/null
+		#find qik_root/*| grep ".svn"|rm -rf 
+		#find qik_root/* | xargs -n1 -i"{}" rm -f -v "{}"
+		#find qik_root/* | xargs -n1 -i"{}" rm -f "{}"
+		echo "- Removing .svn dirs from release..."
+		find qik_root -type d -name .svn -exec rm -rf {} \; 2> /dev/null
+		echo "  done"
+		echo "- Packing..."
+		tar cjf $1_qik_release.tar.bz2 qik_root
+		echo "  done"
+
+		echo "Multilingual version:"
+		rm -r qik_root/* 2> /dev/null
+		cp -a core/* qik_root/ 2> /dev/null
+		cp -a example_multilingual/.htaccess qik_root/ 2> /dev/null
+		cp -a example_multilingual/* qik_root/ 2> /dev/null
+		echo "- Removing .svn dirs from release..."
+		find qik_root -type d -name .svn -exec rm -rf {} \; 2> /dev/null
+		echo "  done"
+		echo "- Packing..."
+		tar cjf $1_qik_release_multilingual.tar.bz2 qik_root
+		echo "Done with release!"
+	fi
 fi
 
