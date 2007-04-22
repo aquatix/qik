@@ -1,7 +1,7 @@
 <?php
 /*
  * file: mod_tagsections.php
- *       v0.1.11 2006-09-18
+ *       v0.1.12 2007-02-08
  * Copyright 2005-2006 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,8 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
-
  */
+
+if (!isset($skel['thumbsize']))
+{
+	$skel['thumbsize'] = 80;
+}
 
 function processTags($skel, $body)
 {
@@ -274,7 +278,9 @@ function getGallery($skel, $key)
 				//$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $file;
 				$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $galleryname . '/' . ($i + 1) . '/';
 			}
-			$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<p><em>" . $title . "</em></p>\n</div>\n";
+			$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<p>" . $title . "</p>\n</div>\n";
+			//$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<div class=\"text\"><span>" . $title . "</span></div>\n</div>\n";
+			//$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a><div class=\"caption\">\n<p>" . $title . "</p></div>\n</div>\n";
 		}
 	}
 	//$result = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $result);
