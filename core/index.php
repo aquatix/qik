@@ -25,7 +25,7 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.1.21 2007-01-01';
+$skel['version'] = '0.1.22 2007-02-08';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
@@ -197,7 +197,8 @@ if ('sitemap' == $action)
 		//echo $filename . "\n" . $destfile;
 	}
 	header("Content-type: image/jpeg");
-	makeThumbnail($filename, 80, $destfile);
+	//makeThumbnail($filename, 80, $destfile);
+	makeThumbnail($filename, $skel['thumbsize'], $destfile);
 	exit;
 } else
 {
