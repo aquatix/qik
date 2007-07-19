@@ -9,9 +9,12 @@
 error_reporting( E_ALL );
 //error_reporting(0);     // set all off
 
-$skel['basedir'] = dirname(dirname(__FILE__));
+$skel['version'] = '0.1.01 2007-07-19';
 
-require_once($skel['basedir'] . 'modules/mod_framework.php');
+$skel['base_dir'] = dirname(dirname(__FILE__));
+$skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
+
+require_once($skel['base_dir'] . '/modules/mod_framework.php');
 require_once('modules/dictionary_admin.php');
 
 
@@ -19,6 +22,8 @@ require_once('modules/dictionary_admin.php');
 $page_name = 'Admin';
 $subnav = null;
 //$skel['section'] = 'search';
+
+$body  = '<h1>' . dict($skel, 'admin_home') . '</h1>';
 
 $action = getRequestParam('action', null);
 
@@ -34,7 +39,7 @@ if (null != $action)
 {
 
 
-	echo "<h1>Admin</h1>\n<p>" . dict($skel, 'welcome_admin') . "</p>\n";
+	$body .= '<p>' . dict($skel, 'admin_welcome') . "</p>\n";
 }
 /*
 $body  = '<h1>' . dict($skel, 'search_homes') . '</h1>';
