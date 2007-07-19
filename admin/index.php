@@ -4,17 +4,14 @@
  */
 
 /* Initialise */
-/*
-$skel['qis_db_url'] = 'localhost';
-$skel['qis_db_name'] = 'qis';
-$skel['qis_db_user'] = 'qis';
-$skel['qis_db_pass'] = 'qisuser';
-*/
+
+//error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );  // set all on
+error_reporting( E_ALL );
+//error_reporting(0);     // set all off
+
 $skel['basedir'] = dirname(dirname(__FILE__));
 
-require_once('modules/setup_qik_framework.php');
-//require_once('modules/mod_db.php');
-//require_once('modules/mod_qis_homes.php');
+require_once($skel['basedir'] . 'modules/mod_framework.php');
 require_once('modules/dictionary_admin.php');
 
 
