@@ -6,7 +6,7 @@
 $skel['frameworkversion'] = '0.1.22 2007-07-19';
 $skel['starttime'] = microtime();
 
-chdir($skel['basedir']);
+chdir($skel['base_dir']);
 
 /* Website configuration */
 include_once('config.php');
@@ -55,7 +55,10 @@ if ('//' == $skel['base_uri'])
 	/* Site is located in the root, compensate for the extra slash */
 	$skel['base_uri'] = '/';
 }
-//$skel['base_uri'] .= getLanguageKey($skel);
+if (isset($skel['base_uri_mask']))
+{
+	$skel['base_uri'] = substr($skel['base_uri'], strlen($skel['base_uri_mask']));
+}
 
 $url_pieces = parse_url(getenv('SCRIPT_URI'));
 $skel['base_server'] = '';
