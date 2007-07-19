@@ -31,7 +31,7 @@ error_reporting( E_ALL );
 
 $skel['version'] = '0.1.23 2007-07-19';
 
-$skel['basedir'] = dirname(__FILE__);
+$skel['base_dir'] = dirname(__FILE__);
 include_once('modules/mod_framework.php');
 
 /*** Getting base stuff ***/
