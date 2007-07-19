@@ -5,7 +5,7 @@
  */
 
 $skel['language'] = 'en';
-$skel['multilanguage'] = true;
+$skel['multilanguage'] = false;
 
 /* Additional information to be shown when a user gets a 'page not found' */
 $skel['404_message'] = '<p>For more AquariuSoft goodness, check out <a href="http://aquariusoft.org">the aquariusoft.org website</a>.</p>';
