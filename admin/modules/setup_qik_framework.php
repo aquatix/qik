@@ -1,15 +1,14 @@
 <?php
 /*** Initializing ***/
 
-$skel['version'] = '0.1.18 2006-06-10';
+$skel['version'] = '0.1.19 2007-07-19';
 $skel['starttime'] = microtime();
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );  // set all on
 error_reporting( E_ALL );
 //error_reporting(0);     // set all off
 
-//chdir('../');
-chdir('/var/www');
+chdir($skel['basedir']);
 /* Website configuration */
 include_once('config.php');
 /* Dictionary for the messages used by the framework */
