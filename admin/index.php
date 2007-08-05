@@ -9,7 +9,7 @@
 error_reporting( E_ALL );
 //error_reporting(0);     // set all off
 
-$skel['version'] = '0.1.01 2007-07-19';
+$skel['version'] = '0.1.02 2007-07-24';
 
 $skel['base_dir'] = dirname(dirname(__FILE__));
 $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
@@ -69,6 +69,11 @@ if ('login' == $action)
 
 
 	$body .= '<p>' . dict($skel, 'admin_welcome') . "</p>\n";
+	$body .= '<div id="loginform"><form action="index.php" method="post">';
+	$body .= '<p><input type="text" name="user" size="16" maxlength="16" />&nbsp;<span class="heading">User</span></p>';
+	$body .= '<p><input type="password" name="pass" size="16" maxlength="16" />&nbsp;<span class="heading">Pass</span><p>';
+	$body .= '<input name="loginbtn" value="Login" type="submit" />';
+	$body .= '</form></div>';
 }
 /*
    $body  = '<h1>' . dict($skel, 'search_homes') . '</h1>';
