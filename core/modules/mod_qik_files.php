@@ -30,14 +30,19 @@ function getSubsections($skel, $section)
 function getFileContents($skel, $section, $page)
 {
 	$content = null;
+	return file_get_contents(getHTMLFile($skel, $section, $page));
+}
+
+
+function getHTMLFile($skel, $section, $page)
+{
 	if (null != $page && '' != $page)
 	{
-		$content = file_get_contents('site/' . getLanguageKey($skel) . 'pages/' . $section . '_' . $page . '.html');
+		return 'site/' . getLanguageKey($skel) . 'pages/' . $section . '_' . $page . '.html';
 	} else
 	{
-		$content = file_get_contents('site/' . getLanguageKey($skel) . 'pages/' . $section . '.html');
+		return 'site/' . getLanguageKey($skel) . 'pages/' . $section . '.html';
 	}
-	return $content;
 }
 
 
