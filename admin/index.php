@@ -3,40 +3,40 @@
  * Admin module for changing texts, and maybe later even edit sections and such
  */
 
-/* Initialise */
+/* Initialise framework */
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );  // set all on
 error_reporting( E_ALL );
 //error_reporting(0);     // set all off
 
-$skel['version'] = '0.1.02 2007-07-24';
+$skel['version'] = '0.1.03 2007-08-05';
 
 $skel['base_dir'] = dirname(dirname(__FILE__));
 $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
 
 require_once($skel['base_dir'] . '/modules/mod_framework.php');
+require_once('config.php');
 require_once('modules/dictionary_admin.php');
 
+print_r($skel);
 
 /* Page initialisation */
 $page_name = 'Admin';
 $subnav = null;
-//$skel['section'] = 'search';
-
-$body  = '<h1>' . dict($skel, 'admin_home') . '</h1>';
+$skel['section'] = 'admin';
 
 $action = getRequestParam('action', null);
+
+$body = '';
 
 if ('login' == $action)
 {
 	/* Try to log in */
-	if ((isLoggedIn() == false) && (isset($_POST['user']) && $_POST['user'] != '') && (isset($_POST['pass']) && $_POST['pass'] != ''))
-	{
 		/* Try to log in */
 		$user = getRequestParam('user', null);
 		$pass = getRequestParam('pass', null);
-		$userid = login($skel, $user, $pass);
-		if ( $userid > 0)
+	echo 'logging in...';
+		if ($user == $skel['admin_user'] && $pass == $skel['admin_pass'])
 		{
 			/* Login successfull! */
 			/* Start new session */
@@ -45,16 +45,14 @@ if ('login' == $action)
 
 			$_SESSION['username'] = $user;
 			$_SESSION['userid'] = $userid;
+			$action = 'editoverview';
 		} else
 		{
-			$page_body .= "<h1>Error!</h1>\n<p>Not a valid user/pass combo!</p>\n<p><a href=\"root.php\">Go back</a></p>\n<br /><br /><br /><br />\n";
-			include "inc/inc_pagetemplate.php";
-			exit;
+			$body .= "<h1>Error!</h1>\n<p>Not a valid user/pass combo!</p>\n<p><a href=\"root.php\">Go back</a></p>\n<br /><br /><br /><br />\n";
 		}
-	}
 
 } else if ( 'logout' == $action )
-{   
+{
 	/* user wants to log out */
 	unset($_SESSION['username']);
 	/* Destroy session vars */
@@ -64,30 +62,59 @@ if ('login' == $action)
 	$user_pass = null;
 	$body .= "<h1>" . dict($skel, 'admin_loggedout') . "</h1>\n<p><a href=\"./\">" . dict($skel, 'admin_backtologin') . "</a></p>\n<br/><br/><br/><br/>";
 
+}
+
+if ('editoverview' == $action && isLoggedIn())
+{
+	$body  = '<h1>' . dict($skel, 'admin_home') . '</h1>';
+
+	$body .= '<p>' . dict($skel, 'admin_editpage_explanation') . "</p>\n";
+
+	$body .= buildSitemap($skel, $sections, 'admin/edit', true);
+
+
+} else if ('editpage' == $action && isLoggedIn())
+{
+	$body  = '<h1>' . dict($skel, 'admin_editpage') . '</h1>';
+
+	$body .= '<p><a href="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/">' . dict($skel, 'admin_back2overview') . '</a></p>';
+
+	$section = getRequestParam('section', null);
+	$page = getRequestParam('page', null);
+
+	$body .= '<p>' . dict($skel, 'admin_editingpage') . ': ' . $section . '/' . $page . "</p>\n";
+
+	if (isset($_POST['savebtn']))
+	{
+		$body .= '<p>Saving...</p>';
+	}
+
+	$content = getFileContents($skel, $section, $page);
+	$body .= '<form action="" method="post">';
+	$body .= '<textarea rows="30" cols="80">' . htmlentities($content) . '</textarea>';
+	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
+	$body .= '</form>';
 } else
 {
-
+	$body .= '<h1>' . dict($skel, 'admin_login') . '</h1>';
 
 	$body .= '<p>' . dict($skel, 'admin_welcome') . "</p>\n";
-	$body .= '<div id="loginform"><form action="index.php" method="post">';
-	$body .= '<p><input type="text" name="user" size="16" maxlength="16" />&nbsp;<span class="heading">User</span></p>';
-	$body .= '<p><input type="password" name="pass" size="16" maxlength="16" />&nbsp;<span class="heading">Pass</span><p>';
+	$body .= '<div id="loginform"><form action="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/login/" method="post">';
+	$body .= '<p><input type="text" name="user" size="16" maxlength="16" />&nbsp;<span class="heading">' . dict($skel, 'admin_username') . '</span></p>';
+	$body .= '<p><input type="password" name="pass" size="16" maxlength="16" />&nbsp;<span class="heading">' . dict($skel, 'admin_password') . '</span><p>';
 	$body .= '<input name="loginbtn" value="Login" type="submit" />';
 	$body .= '</form></div>';
 }
-/*
-   $body  = '<h1>' . dict($skel, 'search_homes') . '</h1>';
-   $body .= '<form action="" method="post">';
-   $body .= '<p><input type="text" name="query" value="' . $searchquery . '" /></p>';
-   $body .= '<p>Price between <input type="text" name="pricelow" value="' . $pricerange_low . '" /> and <input type="text" name="pricehigh" value="' . $pricerange_high . '" /></p>';$body .= '<p><input type="submit" name="search" value="' . dict($skel, 'find') . '" /></p>';
-   $body .= '</form>';
-
-   $body .= "<h2>" . dict($skel, 'in_budget') . "</h2>\n";
-//$body .= '<p>Koophuizen onder de &euro;100.000</p>';
- */
-$skel['section'] = 'admin';
 
 $navbar = buildNav($skel, $sections);
 echo processTags($skel, buildPage($skel, $page_name, $navbar, $subnav, $body));
 
+/*
+ * Check whether there is a valid session
+ */
+function isLoggedIn()
+{
+	return true;
+	return (isset($_SESSION['username']));
+}
 ?>
