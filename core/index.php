@@ -136,6 +136,14 @@ if ('sitemap' == $action)
 	exit;
 } else
 {
+
+	/* Find which page is the homepage; needed for example to decide which page gets the 3-column
+	 * layout with the news column
+	 */
+	$skel['home_section'] = getItem($sections, 0);
+	$homesections = getSubsections($skel, $skel['home_section']);
+	$skel['home_page'] = getItem($homesections, 0);
+
 	if ($section == null)
 	{
 		$section = getItem($sections, 0);
@@ -188,7 +196,7 @@ if ('sitemap' == $action)
 	$body = '';
 	if (trim($page_name) != '')
 	{
-		$body = '<h1>' . $page_name . "</h1>\n";
+		$body = '<h1 class="first">' . $page_name . "</h1>\n";
 	}
 	$body .= $content;
 
