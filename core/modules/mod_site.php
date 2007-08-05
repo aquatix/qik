@@ -1,8 +1,8 @@
 <?php
 /*
  * file: mod_site.php
- * v0.1.19 2007-01-03
- * Copyright 2005-2006 mbscholt at aquariusoft.org
+ * v0.1.20 2007-07-21
+ * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -369,6 +369,21 @@ function getLanguageKey($skel)
 	} else
 	{
 		return '';
+	}
+}
+
+
+/*
+ * Check whether the current page is the site's homepage
+ */
+function isHomepage($skel)
+{
+	if (isset($skel['home_page']) && isset($skel['home_section']) && $skel['home_page'] == $skel['page'] && $skel['home_section'] == $skel['section'])
+	{
+		return true;
+	} else
+	{
+		return false;
 	}
 }
 
