@@ -15,17 +15,29 @@ $skel['base_dir'] = dirname(dirname(__FILE__));
 $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
 
 require_once($skel['base_dir'] . '/modules/mod_framework.php');
-require_once('config.php');
+require_once('config_admin.php');
 require_once('modules/dictionary_admin.php');
 
-print_r($skel);
+$options = array(
+	'overview=' . dict($skel, 'admin_home'),
+	'logout=Log out'
+);
 
 /* Page initialisation */
 $page_name = 'Admin';
-$subnav = null;
-$skel['section'] = 'admin';
+//$subnav = null;
+$skel['sectionname'] = 'admin';
+$subnav = buildAdminSubnav($skel, 'edit', $options);
 
 $action = getRequestParam('action', null);
+
+/* session check */
+if (isset($_REQUEST[$skel['admin_sessionname']]))
+{
+	/* already logged in, resume session */
+	session_name($skel['admin_sessionname']);
+	session_start();
+}
 
 $body = '';
 
@@ -35,16 +47,15 @@ if ('login' == $action)
 		/* Try to log in */
 		$user = getRequestParam('user', null);
 		$pass = getRequestParam('pass', null);
-	echo 'logging in...';
+
 		if ($user == $skel['admin_user'] && $pass == $skel['admin_pass'])
 		{
 			/* Login successfull! */
 			/* Start new session */
-			session_name($skel['session_name']);
+			session_name($skel['admin_sessionname']);
 			session_start();
 
 			$_SESSION['username'] = $user;
-			$_SESSION['userid'] = $userid;
 			$action = 'editoverview';
 		} else
 		{
@@ -60,13 +71,13 @@ if ('login' == $action)
 	session_destroy();
 	$user_name = null;
 	$user_pass = null;
-	$body .= "<h1>" . dict($skel, 'admin_loggedout') . "</h1>\n<p><a href=\"./\">" . dict($skel, 'admin_backtologin') . "</a></p>\n<br/><br/><br/><br/>";
+	$body .= "<h1>Admin - " . dict($skel, 'admin_loggedout') . "</h1>\n<p><a href=\"./\">" . dict($skel, 'admin_backtologin') . "</a></p>\n<br/><br/><br/><br/>";
 
 }
 
 if ('editoverview' == $action && isLoggedIn())
 {
-	$body  = '<h1>' . dict($skel, 'admin_home') . '</h1>';
+	$body  = '<h1>Admin - ' . dict($skel, 'admin_home') . '</h1>';
 
 	$body .= '<p>' . dict($skel, 'admin_editpage_explanation') . "</p>\n";
 
@@ -75,28 +86,34 @@ if ('editoverview' == $action && isLoggedIn())
 
 } else if ('editpage' == $action && isLoggedIn())
 {
-	$body  = '<h1>' . dict($skel, 'admin_editpage') . '</h1>';
+	$body  = '<h1>Admin - ' . dict($skel, 'admin_editpage') . '</h1>';
 
-	$body .= '<p><a href="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/">' . dict($skel, 'admin_back2overview') . '</a></p>';
+	//$body .= '<p><a href="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/">' . dict($skel, 'admin_back2overview') . '</a></p>';
 
 	$section = getRequestParam('section', null);
 	$page = getRequestParam('page', null);
 
-	$body .= '<p>' . dict($skel, 'admin_editingpage') . ': ' . $section . '/' . $page . "</p>\n";
-
 	if (isset($_POST['savebtn']))
 	{
-		$body .= '<p>Saving...</p>';
+		$filename = getHTMLFile($skel, $section, $page);
+		$body .= '<p><em>' . dict($skel, 'admin_savedpage') . ': ' . $filename . '</em></p>';
+		$pagecontent = str_replace("\r\n", "\n", getRequestParam('pagecontent', null));
+		//echo '|||' . $pagecontent . '|||';
+		$file = fopen($skel['base_dir'] . '/' . $filename, "w");
+		fputs($file, $pagecontent);
+		fclose($file);
 	}
+
+	$body .= '<p>' . dict($skel, 'admin_editingpage') . ': ' . $section . '/' . $page . "</p>\n";
 
 	$content = getFileContents($skel, $section, $page);
 	$body .= '<form action="" method="post">';
-	$body .= '<textarea rows="30" cols="80">' . htmlentities($content) . '</textarea>';
+	$body .= '<textarea name="pagecontent" rows="30" cols="80">' . htmlentities($content) . '</textarea>';
 	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
 	$body .= '</form>';
 } else
 {
-	$body .= '<h1>' . dict($skel, 'admin_login') . '</h1>';
+	$body .= '<h1>Admin - ' . dict($skel, 'admin_login') . '</h1>';
 
 	$body .= '<p>' . dict($skel, 'admin_welcome') . "</p>\n";
 	$body .= '<div id="loginform"><form action="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/login/" method="post">';
@@ -114,7 +131,6 @@ echo processTags($skel, buildPage($skel, $page_name, $navbar, $subnav, $body));
  */
 function isLoggedIn()
 {
-	return true;
 	return (isset($_SESSION['username']));
 }
 ?>
