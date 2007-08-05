@@ -29,7 +29,7 @@
 error_reporting( E_ALL );
 //error_reporting(0);	// set all off
 
-$skel['version'] = '0.1.23 2007-07-19';
+$skel['version'] = '0.1.24 2007-07-21';
 
 $skel['base_dir'] = dirname(__FILE__);
 include_once('modules/mod_framework.php');

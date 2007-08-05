@@ -1,7 +1,7 @@
 <?php
 /*
  * file: mod_site.php
- * v0.1.20 2007-07-21
+ * v0.1.21 2007-08-05
  * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -92,9 +92,13 @@ function getValue($item)
 }
 
 
-function buildSitemap($skel, $sections)
+function buildSitemap($skel, $sections, $base='page', $omitsitemap=false)
 {
-	$result = '<div class="updatedat">generated @ ' . date('Y-m-d') . "</div>\n";
+	$result = '';
+	if (!$omitsitemap)
+	{
+		$result = '<div class="updatedat">generated @ ' . date('Y-m-d') . "</div>\n";
+	}
 	$result .= "<ul>\n";
 
 	for ($i = 0; $i < count($sections); $i++)
@@ -104,7 +108,11 @@ function buildSitemap($skel, $sections)
 			$key = getKey($sections[$i]);
 			if ('#' != $key[0] && '' != getValue($sections[$i]))	// '#' denotes comment
 			{
-				$result .= "\t<li><a href=\"" . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
+				if ('sitemap' != $key || ('sitemap' == $key && !$omitsitemap))
+				{
+					$result .= "\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
+				}
+
 				if ('sitemap' == $key)
 				{
 					$subsections = false;
@@ -122,7 +130,7 @@ function buildSitemap($skel, $sections)
 							$subkey = getKey($subsections[$j]);
 							if ('#' != $subkey[0] && '' != getValue($subsections[$j]))        // '#' denotes comment
 							{
-								$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . getValue($subsections[$j]) . "</a></li>\n";
+								$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . getValue($subsections[$j]) . "</a></li>\n";
 							}
 						}
 					}
