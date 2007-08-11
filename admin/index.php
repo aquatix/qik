@@ -59,7 +59,8 @@ if ('login' == $action)
 			$action = 'editoverview';
 		} else
 		{
-			$body .= "<h1>Error!</h1>\n<p>Not a valid user/pass combo!</p>\n<p><a href=\"root.php\">Go back</a></p>\n<br /><br /><br /><br />\n";
+			//$body .= "<h1>Error!</h1>\n<p>Not a valid user/pass combo!</p>\n<p><a href=\"root.php\">Go back</a></p>\n<br /><br /><br /><br />\n";
+			$body .= "<h1>Sorry</h1><em>Not a valid user/pass combo!</em>\n";
 		}
 
 } else if ( 'logout' == $action )
