@@ -2,8 +2,8 @@
 /*
  * file: mod_toolkit.php
  *       Useful functions for doing operations on text, converting items etc
- *       v0.1.10 2006-09-18
- * Copyright 2005-2006 mbscholt at aquariusoft.org
+ *       v0.1.11 2007-09-09
+ * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -213,6 +213,17 @@ function getmicrotime()
 	return ((float)$usec + (float)$sec);
 }
 
+
+/*
+ * Remove an element from an array while keeping indices intact [instead of doing unset]
+ */
+function removeArrayElement(&$arr, $index)
+{
+	if(isset($arr[$index]))
+	{
+		array_splice($arr, $index, 1);
+	}
+}
 
 function getURIs($text)
 {
