@@ -1,8 +1,13 @@
 <?php
 /*
  * file: mod_site.php
- * v0.1.21 2007-08-05
+ *       v0.1.22 2007-09-09
+ *       Module for building most of the various content of the Qik site
  * Copyright 2005-2007 mbscholt at aquariusoft.org
+ *
+ * Qik is the legal property of its developer, Michiel Scholten
+ * [mbscholt at aquariusoft.org]
+ * Please refer to the COPYRIGHT file distributed with this source distribution.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +23,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
-
 
 
 function build404($skel, $navbar, $message = null)
@@ -394,5 +398,27 @@ function isHomepage($skel)
 		return false;
 	}
 }
+
+
+/*
+ * Remove all thumbnails for this gallery so they'll get regenerated next view
+ * Used after updating a gallery
+ */
+function cleanThumbs($skel, $gallery)
+{
+	delfile($skel['base_dir'] . '/images/gallery/thumbs/'. $gallery . '_*.jpg');
+}
+
+
+/*
+ * Delete file, or files if a wildcard is used
+ */
+function delfile($str)
+{
+	foreach(glob($str) as $fn)
+	{
+		unlink($fn);
+	}
+} 
 
 ?>

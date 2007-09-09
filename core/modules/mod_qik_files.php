@@ -1,9 +1,30 @@
 <?php
 /*
- * Module for getting the contents of the qik site -- flat files method
- * Used for abstrahizing the storage method, so you can transparantly switch between flat files and database
- * version 0.1.04 2006-05-23
+ * file: mod_qik_files.php
+ *       v0.1.05 2007-09-09
+ *       Module for getting the contents of the qik site -- flat files method
+ *       Used for abstrahizing the storage method, so you can transparantly switch between flat files and database
+ * Copyright 2005-2007 mbscholt at aquariusoft.org
+ *
+ * Qik is the legal property of its developer, Michiel Scholten
+ * [mbscholt at aquariusoft.org]
+ * Please refer to the COPYRIGHT file distributed with this source distribution.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
+
 
 function getSections($skel)
 {
@@ -27,14 +48,13 @@ function getSubsections($skel, $section)
 }
 
 
-function getFileContents($skel, $section, $page)
+function getHTMLFileContents($skel, $section, $page)
 {
-	$content = null;
-	return file_get_contents(getHTMLFile($skel, $section, $page));
+	return file_get_contents(getHTMLFilename($skel, $section, $page));
 }
 
 
-function getHTMLFile($skel, $section, $page)
+function getHTMLFilename($skel, $section, $page)
 {
 	if (null != $page && '' != $page)
 	{
@@ -55,6 +75,17 @@ function getTile($skel, $key)
 function getFile($skel, $kind, $key)
 {
 	return file('site/' . getLanguageKey($skel) . $kind . '/' . $key . '.desc');
+}
+
+
+function getFilesname($skel, $kind, $key)
+{
+	return 'site/' . getLanguageKey($skel) . $kind . '/' . $key . '.desc';
+}
+
+function getFileContents($skel, $kind, $key)
+{
+	return file_get_contents(getFilesname($skel, $kind, $key));
 }
 
 
