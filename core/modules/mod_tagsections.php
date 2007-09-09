@@ -1,8 +1,8 @@
 <?php
 /*
  * file: mod_tagsections.php
- *       v0.1.12 2007-02-08
- * Copyright 2005-2006 mbscholt at aquariusoft.org
+ *       v0.1.13 2007-09-09
+ * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -142,7 +142,9 @@ function getItems($skel, $kind, $key)
 			{
 				if ( isset($datafile[$i]) && ( ('' == trim($datafile[$i])) || ('#' == substr(ltrim($datafile[$i]), 0, 1)) ) )
 				{
-					unset($datafile[$i]);
+					//unset($datafile[$i]);
+					//$datafile[$i] = null;
+					removeArrayElement(&$datafile, $i);
 				} else
 				{
 					$i++;
