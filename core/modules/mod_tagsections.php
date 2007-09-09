@@ -1,8 +1,7 @@
 <?php
-/*
- * file: mod_tagsections.php
- *       v0.1.14 2007-09-09
- *       Module for expanding @@@key=value@@@-style tags
+/**
+ * mod_tagsections.php - Module for expanding @@@key=value@@@-style tags
+ * v0.2.01 2007-09-09
  * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -20,8 +19,7 @@
  * GNU Library General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 if (!isset($skel['thumbsize']))
