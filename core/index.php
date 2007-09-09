@@ -1,7 +1,7 @@
 <?php
-
 /**
- * index.php Main file for the Qik framework
+ * index.php - Main file for the Qik framework
+ * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholtNOSPAM@aquariusoft.org]
@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -29,7 +28,7 @@
 error_reporting( E_ALL );
 //error_reporting(0);	// set all off
 
-$skel['version'] = '0.1.24 2007-07-21';
+$skel['version'] = '0.2.01 2007-09-09';
 
 $skel['base_dir'] = dirname(__FILE__);
 include_once('modules/mod_framework.php');
@@ -176,7 +175,7 @@ if ('sitemap' == $action)
 		$subnav = buildSubnav($skel, $section, $subsections);
 	}
 
-	$content = getFileContents($skel, $section, $page);
+	$content = getHTMLFileContents($skel, $section, $page);
 	if (null == $content)
 	{
 		addToLog($skel, $section, $page, 404);
