@@ -1,8 +1,7 @@
 <?php
 /**
- * file: mod_admin.php
- * v0.1.01 2007-09-09
- * Module with supporting functions for the admin function of the Qik framework
+ * mod_admin.php - Module with supporting functions for the admin function of the Qik framework
+ * v0.2.01 2007-09-09
  * Copyright 2007-2007 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -20,8 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
