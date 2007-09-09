@@ -1,8 +1,13 @@
 <?php
 /*
  * file: mod_tagsections.php
- *       v0.1.13 2007-09-09
+ *       v0.1.14 2007-09-09
+ *       Module for expanding @@@key=value@@@-style tags
  * Copyright 2005-2007 mbscholt at aquariusoft.org
+ *
+ * Qik is the legal property of its developer, Michiel Scholten
+ * [mbscholt at aquariusoft.org]
+ * Please refer to the COPYRIGHT file distributed with this source distribution.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
