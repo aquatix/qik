@@ -9,7 +9,7 @@
 error_reporting( E_ALL );
 //error_reporting(0);     // set all off
 
-$skel['version'] = '0.1.03 2007-08-05';
+$skel['version'] = '0.1.04 2007-09-09';
 
 $skel['base_dir'] = dirname(dirname(__FILE__));
 $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
@@ -17,6 +17,7 @@ $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs
 require_once($skel['base_dir'] . '/modules/mod_framework.php');
 require_once('config_admin.php');
 require_once('modules/dictionary_admin.php');
+require_once('modules/mod_admin.php');
 
 $options = array(
 	'overview=' . dict($skel, 'admin_home'),
@@ -80,10 +81,13 @@ if ('editoverview' == $action && isLoggedIn())
 {
 	$body  = '<h1>Admin - ' . dict($skel, 'admin_home') . '</h1>';
 
+	$body .= '<h2>' . dict($skel, 'admin_pages') . '</h2>';
 	$body .= '<p>' . dict($skel, 'admin_editpage_explanation') . "</p>\n";
 
 	$body .= buildSitemap($skel, $sections, 'admin/edit', true);
 
+	$body .= '<h2>' . dict($skel, 'admin_galleries') . '</h2>';
+	$body .= buildGalleryOverview($skel);
 
 } else if ('editpage' == $action && isLoggedIn())
 {
@@ -96,7 +100,7 @@ if ('editoverview' == $action && isLoggedIn())
 
 	if (isset($_POST['savebtn']))
 	{
-		$filename = getHTMLFile($skel, $section, $page);
+		$filename = getHTMLFilename($skel, $section, $page);
 		$body .= '<p><em>' . dict($skel, 'admin_savedpage') . ': ' . $filename . '</em></p>';
 		$pagecontent = str_replace("\r\n", "\n", getRequestParam('pagecontent', null));
 		//echo '|||' . $pagecontent . '|||';
@@ -107,9 +111,34 @@ if ('editoverview' == $action && isLoggedIn())
 
 	$body .= '<p>' . dict($skel, 'admin_editingpage') . ': ' . $section . '/' . $page . "</p>\n";
 
-	$content = getFileContents($skel, $section, $page);
+	$content = getHTMLFileContents($skel, $section, $page);
 	$body .= '<form action="" method="post">';
-	$body .= '<textarea name="pagecontent" rows="30" cols="80">' . htmlentities($content) . '</textarea>';
+	$body .= '<textarea name="pagecontent" rows="40" cols="100">' . htmlentities($content) . '</textarea>';
+	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
+	$body .= '</form>';
+} else if ('editgallery' == $action && isLoggedIn())
+{
+
+	$body .= '<h1>Admin - ' . dict($skel, 'admin_editgallery') . '</h1>';
+	$gallery = getRequestParam('gallery', null);
+
+	if (isset($_POST['savebtn']))
+	{
+		$filename = getFilesname($skel, 'gallery', $gallery);
+		$body .= '<p><em>' . dict($skel, 'admin_savedgallery') . ': ' . $filename . '</em></p>';
+		$pagecontent = str_replace("\r\n", "\n", getRequestParam('pagecontent', null));
+		$file = fopen($skel['base_dir'] . '/' . $filename, "w");
+		fputs($file, $pagecontent);
+		fclose($file);
+		/* rm all thumbnails; they are regenerated on next view of the gallery */
+		cleanThumbs($skel, str_replace('.desc', '', $gallery));
+	}
+
+	$body .= '<p>' . dict($skel, 'admin_editinggallery') . ': ' . $gallery . '</p>';
+	$body .= '<p>' . dict($skel, 'admin_editinggallery_explanation') . '</p>';
+	$content = getFileContents($skel, 'gallery', $gallery);
+	$body .= '<form action="" method="post">';
+	$body .= '<textarea name="pagecontent" rows="40" cols="100" wrap="off">' . htmlentities($content) . '</textarea>';
 	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
 	$body .= '</form>';
 } else
