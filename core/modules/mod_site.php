@@ -1,7 +1,7 @@
 <?php
 /**
  * mod_site.php - Module for building most of the various content of the Qik site
- * v0.2.01 2007-09-09
+ * v0.2.02 2007-09-10
  * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -63,11 +63,14 @@ function buildHTTPErrorPage($skel, $navbar, $code, $message = null)
 }
 
 
+/*
+ * Look up a given key in an array and return its value
+ */
 function getName($items, $id)
 {
 	for ($i = 0; $i < count($items); $i++)
 	{
-		if (trim($items[$i]) != "")
+		if ('' != trim($items[$i]))
 		{
 			if (getKey($items[$i]) == $id)
 			{
@@ -79,6 +82,9 @@ function getName($items, $id)
 }
 
 
+/*
+ * Get left part of a key=value pair
+ */
 function getKey($item)
 {
 	$parts = explode("=", $item);
@@ -86,6 +92,9 @@ function getKey($item)
 }
 
 
+/*
+ * Get right part of a key=value pair
+ */
 function getValue($item)
 {
 	$parts = explode("=", $item);
@@ -367,6 +376,7 @@ function dict($skel, $key, $value = null)
 /* Validate the language option from the url */
 function validateLanguage($languagekey)
 {
+	/* @TODO: implement */
 	return $languagekey;
 }
 
@@ -406,17 +416,5 @@ function cleanThumbs($skel, $gallery)
 {
 	delfile($skel['base_dir'] . '/images/gallery/thumbs/'. $gallery . '_*.jpg');
 }
-
-
-/*
- * Delete file, or files if a wildcard is used
- */
-function delfile($str)
-{
-	foreach(glob($str) as $fn)
-	{
-		unlink($fn);
-	}
-} 
 
 ?>
