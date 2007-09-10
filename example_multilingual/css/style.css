@@ -2,7 +2,7 @@ body
 {
 	font-family: verdana, tahoma, helvetica, sans;
 	font-size: .8em;
-/*	background-color: #1C45A3;*/
+	background-color: #000;
 }
 
 /* Hides from IE5-mac; HACK for iframe not resizing properly in IE \*/
@@ -34,12 +34,24 @@ a
 {
 	text-decoration: none;
 	color: #1C45A3;
+	color: #00CC00;
 }
 
-a:hover
+a:hover, .subnavbar a.highlight
 {
 	text-decoration: underline;
 	color: #1C45A3;
+	color: #00CC00;
+}
+
+img
+{
+	border: 0;
+}
+
+img a
+{
+	border: 0;
 }
 
 th
@@ -48,6 +60,20 @@ th
 	font-weight: bold;
 }
 
+.wrapperbox
+{
+	text-align: center;
+}
+
+.page
+{
+	background-color: #FEFEFE;
+	border: 1px solid #0C0;
+	width: 90%;
+/*	padding: .5em;*/
+	margin: 1em auto 1em auto;
+	text-align: left;
+}
 
 #banner
 {
@@ -56,14 +82,13 @@ th
 	border-top: 1px solid #000;
 	border-bottom: 1px solid #000;
 */
+	padding: .5em .5em 0 .5em;
 }
 
 .navbar
 {
 	margin-top: .5em;
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
-	background-color: #DDEEFF;
+	background-color: #00CC00;
 	padding: .5em;
 }
 
@@ -75,14 +100,14 @@ th
 		padding-right: .5em;
 		color: #FFF;
 		text-decoration: none;
-		background-color: #1C45A3;
-		border-top: 1px solid #5384f6;
-		border-left: 1px solid #5384f6;
-		border-bottom: 1px solid #002373;
-		border-right: 1px solid #002373;
+		background-color: transparent;
+		border-top: 1px solid #66FF66;
+		border-left: 1px solid #66FF66;
+		border-bottom: 1px solid #007A00;
+		border-right: 1px solid #007A00;
 	}
 
-	.navbar a:hover
+	.navbar a:hover, .navbar a.highlight
 	{
 		padding-top: .2em;
 		padding-bottom: .2em;
@@ -90,22 +115,39 @@ th
 		padding-right: .5em;
 		color: #FFF;
 		text-decoration: none;
-		background-color: #6984ff;
-		border-bottom: 1px solid #5384f6;
-		border-right: 1px solid #5384f6;
-		border-top: 1px solid #002373;
-		border-left: 1px solid #002373;
+		background-color: transparent;
+		border-bottom: 1px solid #66FF66;
+		border-right: 1px solid #66FF66;
+		border-top: 1px solid #007A00;
+		border-left: 1px solid #007A00;
 	}
 
 .subnavbar
 {
+	float: left;
+	width: 13em;
+	margin-top: .5em;
+	margin-bottom: 1em;
+
 	width: 13em;
 /*	margin-top: .5em;*/
 	margin-bottom: 1em;
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
-	background-color: #DDEEFF;
 	padding: .3em;
+/*
+	background-color: #66FF66;
+	border-top: 1px solid #AAFFAA;
+	border-left: 1px solid #AAFFAA;
+	border-bottom: 1px solid #447A44;
+	border-right: 1px solid #447A44;
+*/
+	background-color: #E6FFE6;
+	background-color: #00CC00;
+	color: #FFF;
+	border-top: 1px solid #66FF66;
+	border-left: 1px solid #66FF66;
+	border-bottom: 1px solid #007A00;
+	border-right: 1px solid #007A00;
+
 }
 
 	.subnavbar h2
@@ -124,6 +166,11 @@ th
 
 	.subnavbar ul
 	{
+		margin-top: 0;
+		margin-bottom: 0;
+		margin-left: 1em;
+		padding-left: 0;
+
 		margin-top: 0;
 		margin-bottom: 0;
 		margin-left: 1em;
@@ -150,13 +197,25 @@ th
 		font-size: .7em;
 	}
 
+	.subnavbar input.searchfield
+	{
+		width: 7em;
+	}
+	
+	.subnavbar a, .subnavbar a:hover, .subnavbar a.highlight
+	{
+		color: #FFF;
+	}
+
 .pagebody
 {
+	margin-top: .5em;
+	padding: .3em;
+	line-height: 1.2;
+
 	color: #000;
 	background-color: #FFF;
 	margin-top: .5em;
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
 	padding: .3em;
 	line-height: 1.2;
 }
@@ -164,6 +223,7 @@ th
 .content
 {
 	position: relative;
+	margin-left: 15em;
 }
 
 .content img
@@ -172,13 +232,25 @@ th
 	padding: 3px;
 }
 
+.updatedat
+{
+	text-align: right;
+	font-size: .8em;
+}
+
 .news
 {
-/*	width: 15em;*/
 	margin-top: .5em;
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
-/*	background-color: #DDEEFF;*/
+	background-color: #E6FFE6;
+	/*background-color: #bff2bf;*/
+	/*
+	border-top: 1px solid #007A00;
+	border-left: 1px solid #007A00;
+	border-bottom: 1px solid #66FF66;
+	border-right: 1px solid #66FF66;*/
+	background-color: #66FF66;
+	background-color: #80ff80;
+	background-color: #e7ffe7;
 	padding: .3em;
 }
 
@@ -197,6 +269,15 @@ th
 		margin-bottom: 0;
 	}
 
+.galleryimage
+{
+	float: left;
+
+	width: 150px;
+	height: 150px;
+	text-align: center;
+}
+
 .formfields p
 {
 	margin-top: 0;
@@ -206,7 +287,6 @@ th
 .footer
 {
 	clear: both;
-/*	padding-left: 15em;*/
 	margin-top: .5em;
 	padding: .2em;
 	border-top: 1px solid #CCC;
@@ -229,4 +309,8 @@ th
 	padding-bottom: .1em;
 }
 
-
+/*** Notes ***/
+/*
+padding:
+	This property is a shorthand for the top, right, bottom and left properties.
+*/
