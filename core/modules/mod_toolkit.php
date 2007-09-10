@@ -385,8 +385,10 @@ function myIsInt($x)
 }
 
 
-
-function getRequestParam($paramname, $default)
+/*
+ * Return a value passed to the page, providing a fallback value
+ */
+function getRequestParam($paramname, $default=null)
 {
 	if (isset($_REQUEST[$paramname]))
 	{
@@ -417,7 +419,7 @@ function isValidURI($uri)
 	}
 
 	/*
-	 * Beware - it only validates scemes: http and https, and it only takes into account host and port part of the uri. It does not accept username and password.
+	 * Beware - it only validates schemes http and https, and it only takes into account host and port part of the uri. It does not accept username and password.
 	 * For an email validator you could look at http://gaarsmand.com/index.php/IT_l%F8sninger/Kode_eksempler/PHP_kode.
 	 */
 }
@@ -505,7 +507,8 @@ function getFilename($path)
  * This function can build a thumbnail of any size you want and display it on your browser!
  * Hope it can be useful for you guys!
  */
-function makeThumbnail($o_file, $t_ht = 100, $thumbfilename = null) {
+/*function makeThumbnail($o_file, $t_ht = 100, $thumbfilename = null) {*/
+function makeThumbnail($o_file, $t_max = 100, $thumbfilename = null) {
 	$image_info = getImageSize($o_file) ; // see EXIF for faster way
 
 	switch ($image_info['mime'])
@@ -554,8 +557,17 @@ function makeThumbnail($o_file, $t_ht = 100, $thumbfilename = null) {
 	if (!isset($ermsg)) {
 		$o_wd = imagesx($o_im) ;
 		$o_ht = imagesy($o_im) ;
-		// thumbnail width = target * original width / original height
-		$t_wd = round($o_wd * $t_ht / $o_ht) ;
+		$t_wd = $t_max;
+		$t_ht = $t_max;
+		if ($o_wd > $o_ht)
+		{
+			// thumbnail height = original height * target / original width
+			$t_ht = round($o_ht * $t_wd / $o_wd);
+		} else
+		{
+			// thumbnail width = original width * target / original height
+			$t_wd = round($o_wd * $t_ht / $o_ht) ;
+		}
 
 		$t_im = imageCreateTrueColor($t_wd,$t_ht);
 
@@ -575,5 +587,17 @@ function makeThumbnail($o_file, $t_ht = 100, $thumbfilename = null) {
 	}
 	return isset($ermsg)?$ermsg:NULL;
 }
+
+
+/*
+ * Delete file, or files if a wildcard is used
+ */
+function delfile($str)
+{
+	foreach(glob($str) as $fn)
+	{
+		unlink($fn);
+	}
+} 
 
 ?>
