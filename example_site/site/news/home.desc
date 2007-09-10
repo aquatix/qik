@@ -1,6 +1,12 @@
+2007-09-10=<p>Completely overhauled the style sheets for the example sites, got rid of struct.css</p>
+2007-09-09=<p>Tagged v0.2</p><p>Admin now edits galleries too</p>
+2007-07-19=<p>Added admin module for editing pages</p><p>Reworked setting up the framework [added module setup_qik_framework.php]</p>
+2006-09-22=<p>Gallery generates thumbnails now</p>
+2006-06-27=<p>Qik now supports multiple languages</p>
+Spring 2006=<p>Loggin support</p>
+#2006-05-23=<p>Imported project into subversion - this item isn't shown because it's commented out
 2006-02-01=<p>First public release</p>
 2006-01-19=<p>Major rewrite</p>
 2006-01-01=<p>Happy New Year!</p>
 2005-11-11=<p>The Qik webpage is put online</p>
 2005-10-10=<p>Qik is born</p>
-

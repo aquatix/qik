@@ -1,6 +1,7 @@
 <?php
-/*
- * v0.1.05 2006-06-25
+/**
+ * Page template for Qik site framework, single language
+ * v0.2.01 2007-09-10
  */
 
 /*
@@ -13,9 +14,9 @@ function buildPage($skel, $page_title, $navbar, $subnavbar, $body)
 	$template .= "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
 	//$template .= "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
 	$template .= "<head>\n";
-	$template .= "<title>" . $page_title . " | Qik example site</title>\n";
-	$template .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $skel['base_uri'] . "css/struct.css\"/>\n";
-	$template .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $skel['base_uri'] . "css/style.css\"/>\n";
+	$template .= "<title>aquariusoft.org | " . $page_title . "</title>\n";
+	//$template .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $skel["base_uri"] . "css/struct.css\"/>\n";
+	$template .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $skel["base_uri"] . "css/style.css\"/>\n";
 	$template .= "</head>\n<body>\n";
 
 	$template .= "<div class=\"wrapperbox\">\n";
@@ -23,9 +24,9 @@ function buildPage($skel, $page_title, $navbar, $subnavbar, $body)
 
 	/*
 	 * simple banner:
-	 $template .= "<div id=\"banner\"><a href=\"" . $skel['base_uri'] . "\"><img src=\"" . $skel['base_uri'] . "images/aquariusoft_org.png\" alt=\"aquariusoft.org logo\" width=\"170\" height=\"53\" /></a></div>\n";
+	 $template .= "<div id=\"banner\"><a href=\"" . $skel["base_uri"] . "\"><img src=\"" . $skel["base_uri"] . "images/aquariusoft_org.png\" alt=\"aquariusoft.org logo\" width=\"170\" height=\"53\" /></a></div>\n";
 	 */
-	$template .= "<div id=\"banner\"><span class=\"logo\"><a href=\"" . $skel['base_uri'] . "\"><img src=\"" . $skel['base_uri'] . "images/aquariusoft_org.png\" alt=\"aquariusoft.org\" width=\"170\" height=\"53\" /></a></span><span class=\"portalnav\"><a href=\"http://aquariusoft.org/gallery/\">gallery</a> | <a href=\"http://aquariusoft.org/bugs/\">bugtracker</a> | <a href=\"http://aquariusoft.org/forum/\">forum</a> | <a href=\"http://aquariusoft.org/~mbscholt/\">dammIT weblog</a> | <a href=\"http://jakerockwell.aquariusoft.org/\">jake rockwell</a> | <a href=\"http://www.cs.vu.nl/~mbscholt/\">:M</a> | <a href=\"/page/main/about/\">about</a></span></div>\n";
+	$template .= '<div id="banner"><span class="logo"><a href="' . $skel['base_uri'] . '"><img src="' . $skel['base_uri'] . 'images/aquariusoft_org.png" alt="aquariusoft.org" width="170" height="53" /></a></span><span class="portalnav"><a href="http://aquariusoft.org/bugs/">aquariusoft.org bugtracker</a> | <a href="http://aquariusoft.org/forum/">aquariusoft.org forum</a> | <a href="' . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . "main/about/\">about</a></span></div>\n";
 
 	/* Hack for IE's whitespace bug caused by the float */
 	$template .= "<br style=\"clear:both; height: 1px;\" />\n";
@@ -77,7 +78,7 @@ function buildNav($skel, $sections)
 				{
 					$divider = '';
 				}
-				$result .= '<a href="' . $skel['base_uri'] . getLanguageKey($skel) . 'page/' . $sectionkey . '/"' . $active . '>' . trim($section) . '</a>' . $divider;
+				$result .= '<a href="' . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $sectionkey . '/"' . $active . '>' . trim($section) . '</a>' . $divider;
 			}
 		}
 	}
@@ -108,7 +109,7 @@ function buildSubnav($skel, $section, $subsections)
 				{
 					$active = '';
 				}
-				$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . 'page/' . $section . '/' . $pagekey . '/"' . $active . '>' . trim($page) . "</a></li>\n";
+				$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . 'page/' . getLanguageKey($skel) . $section . '/' . $pagekey . '/"' . $active . '>' . trim($page) . "</a></li>\n";
 			}
 		}
 	}
