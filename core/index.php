@@ -25,17 +25,15 @@
 /*** Initializing ***/
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
-error_reporting( E_ALL );
-//error_reporting(0);	// set all off
+error_reporting( E_ALL );	// set all on
+//error_reporting(0);		// set all off
 
-$skel['version'] = '0.2.01 2007-09-09';
+$skel['version'] = '0.2.02 2007-09-10';
 
 $skel['base_dir'] = dirname(__FILE__);
 include_once('modules/mod_framework.php');
 
-/*** Getting base stuff ***/
-
-/* User should provide the site/pagetemplate.php */
+/* N.B.: User should provide the site/pagetemplate.php */
 
 $section = getRequestParam('section', null);
 $page = getRequestParam('page', null);
@@ -43,7 +41,7 @@ $action = getRequestParam('action', null);
 
 
 /*
- * rewrite http://example.com/?section=w00t&page=blah to
+ * Rewrite http://example.com/?section=w00t&page=blah to
  * http://example.com/page/w00t/blah/
  */
 if (isset($url_pieces['query']) && '' != $url_pieces['query'])
@@ -70,6 +68,7 @@ if (isset($url_pieces['query']) && '' != $url_pieces['query'])
 	exit;
 }
 
+/* Should we show an error page? */
 if ($section == 'error')
 {
 	$navbar = buildNav($skel, $sections);
@@ -87,9 +86,10 @@ if ($section == 'error')
 	exit;
 }
 
+/* Now find out what page we should show */
 if ('sitemap' == $action)
 {
-	$body = '<h1>' . dict($skel, 'sitemap') . "</h1>\n";
+	$body = '<h1 class="first">' . dict($skel, 'sitemap') . "</h1>\n";
 	$body .= buildSitemap($skel, $sections);
 	addToLog($skel, 'special', 'sitemap', 200);
 	$page_name = dict($skel, 'sitemap');
@@ -113,32 +113,28 @@ if ('sitemap' == $action)
 	addToLog($skel, 'special', 'viewlog', 200);
 } else if ('makethumb' == $action)
 {
+	/* index.php was called to generate a thumbnail. In this mode it will only generate a picture, output it to stdout and save it */
 	$kind = getRequestParam('kind', null);
 	$filename = null;
 	if ('gallery' == $kind)
 	{
 		$gallery = getRequestParam('gallery', null);
 		$file = getRequestParam('file', -1);
-		//$galleryItems = getGallery($skel, $gallery . ':' . $file . ':1');
 		$galleryItems = getItems($skel, 'gallery', $gallery . ':' . $file . ':' . $file);
 		$filename = getValue($galleryItems[0]);
 		if ('http' != substr($filename, 0, 4))
 		{
+			/* It's a local image */
 			$filename = realpath(dirname(__FILE__)) . '/images/gallery/' . $filename;
 		}
 		$destfile = realpath(dirname(__FILE__)) . '/images/gallery/thumbs/'. $gallery . '_' . $file . '.jpg';
-		//echo $filename . "\n" . $destfile;
 	}
 	header("Content-type: image/jpeg");
-	//makeThumbnail($filename, 80, $destfile);
 	makeThumbnail($filename, $skel['thumbsize'], $destfile);
 	exit;
 } else
 {
-
-	/* Find which page is the homepage; needed for example to decide which page gets the 3-column
-	 * layout with the news column
-	 */
+	/* Find which page is the homepage; needed for example to decide which page gets the 3-column layout with the news column */
 	$skel['home_section'] = getItem($sections, 0);
 	$homesections = getSubsections($skel, $skel['home_section']);
 	$skel['home_page'] = getItem($homesections, 0);
@@ -152,7 +148,6 @@ if ('sitemap' == $action)
 	if ($section_name == null)
 	{
 		addToLog($skel, $section, $page, 404);
-		//echo build404($skel, $navbar, dict($skel, 'section_not_found'));
 		echo build404($skel, null, dict($skel, 'section_not_found'));
 		exit;
 	}
@@ -198,9 +193,6 @@ if ('sitemap' == $action)
 		$body = '<h1 class="first">' . $page_name . "</h1>\n";
 	}
 	$body .= $content;
-
-	/* Rebuild navbar, now with highlighted section */
-	//$navbar = buildNav($skel, $sections);
 
 	addToLog($skel, $section, $page, 200);
 }
