@@ -132,8 +132,9 @@ if ('editoverview' == $action && isLoggedIn())
 	$body .= '<p>' . dict($skel, 'admin_editingpage') . ': ' . $section . '/' . $page . "</p>\n";
 
 	$content = getHTMLFileContents($skel, $section, $page);
+	//$content = str_replace('@', '&#64;', $content);
 	$body .= '<form action="" method="post">';
-	$body .= '<textarea name="pagecontent" rows="40" cols="100">' . htmlentities($content) . '</textarea>';
+	$body .= '<textarea name="pagecontent" rows="40" cols="100">' . str_replace('@', '&#64;', htmlentities($content)) . '</textarea>';
 	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
 	$body .= '</form>';
 } else if ('editgallery' == $action && isLoggedIn())
@@ -158,7 +159,7 @@ if ('editoverview' == $action && isLoggedIn())
 	$body .= '<p>' . dict($skel, 'admin_editinggallery_explanation') . '</p>';
 	$content = getFileContents($skel, 'gallery', $gallery);
 	$body .= '<form action="" method="post">';
-	$body .= '<textarea name="pagecontent" rows="40" cols="100" wrap="off">' . htmlentities($content) . '</textarea>';
+	$body .= '<textarea name="pagecontent" rows="40" cols="100" wrap="off">' . str_replace('@', '&#64;', htmlentities($content)) . '</textarea>';
 	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
 	$body .= '</form>';
 } else
@@ -175,6 +176,7 @@ if ('editoverview' == $action && isLoggedIn())
 
 $navbar = buildNav($skel, $sections);
 echo processTags($skel, buildPage($skel, $page_name, $navbar, $subnav, $body));
+#echo buildPage($skel, $page_name, $navbar, $subnav, $body);
 
 /*
  * Check whether there is a valid session
