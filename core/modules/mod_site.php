@@ -398,7 +398,8 @@ function getLanguageKey($skel)
  */
 function isHomepage($skel)
 {
-	if (isset($skel['home_page']) && isset($skel['home_section']) && $skel['home_page'] == $skel['page'] && $skel['home_section'] == $skel['section'])
+	//if (isset($skel['home_page']) && isset($skel['home_section']) && $skel['home_page'] == $skel['page'] && $skel['home_section'] == $skel['section'])
+	if ($skel['home_page'] == $skel['page'] && $skel['home_section'] == $skel['section'])
 	{
 		return true;
 	} else
