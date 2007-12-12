@@ -1,7 +1,6 @@
 <?php
 /**
  * index.php - Qik admin module for changing texts, and maybe later even edit sections and such
- * v0.2.01 2007-09-09
  * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -29,10 +28,15 @@
 error_reporting( E_ALL );
 //error_reporting(0);     // set all off
 
-$skel['version'] = '0.1.04 2007-09-09';
+$skel['version'] = '0.2.03 2007-12-12';
 
 $skel['base_dir'] = dirname(dirname(__FILE__));
 $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
+
+$skel['page'] = '';
+$skel['section'] = 'admin';
+$skel['home_page'] = '';
+$skel['home_section'] = '';
 
 require_once($skel['base_dir'] . '/modules/mod_framework.php');
 require_once('config_admin.php');
@@ -81,7 +85,7 @@ if ('login' == $action)
 		} else
 		{
 			//$body .= "<h1>Error!</h1>\n<p>Not a valid user/pass combo!</p>\n<p><a href=\"root.php\">Go back</a></p>\n<br /><br /><br /><br />\n";
-			$body .= "<h1>Sorry</h1><em>Not a valid user/pass combo!</em>\n";
+			$body .= "<h1 class=\"first\">Sorry</h1><em>Not a valid user/pass combo!</em>\n";
 		}
 
 } else if ( 'logout' == $action )
@@ -93,13 +97,13 @@ if ('login' == $action)
 	session_destroy();
 	$user_name = null;
 	$user_pass = null;
-	$body .= "<h1>Admin - " . dict($skel, 'admin_loggedout') . "</h1>\n<p><a href=\"./\">" . dict($skel, 'admin_backtologin') . "</a></p>\n<br/><br/><br/><br/>";
+	$body .= "<h1 class=\"first\">Admin - " . dict($skel, 'admin_loggedout') . "</h1>\n<p><a href=\"./\">" . dict($skel, 'admin_backtologin') . "</a></p>\n<br/><br/><br/><br/>";
 
 }
 
 if ('editoverview' == $action && isLoggedIn())
 {
-	$body  = '<h1>Admin - ' . dict($skel, 'admin_home') . '</h1>';
+	$body  = '<h1 class="first">Admin - ' . dict($skel, 'admin_home') . '</h1>';
 
 	$body .= '<h2>' . dict($skel, 'admin_pages') . '</h2>';
 	$body .= '<p>' . dict($skel, 'admin_editpage_explanation') . "</p>\n";
@@ -111,7 +115,7 @@ if ('editoverview' == $action && isLoggedIn())
 
 } else if ('editpage' == $action && isLoggedIn())
 {
-	$body  = '<h1>Admin - ' . dict($skel, 'admin_editpage') . '</h1>';
+	$body  = '<h1 class="first">Admin - ' . dict($skel, 'admin_editpage') . '</h1>';
 
 	//$body .= '<p><a href="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/">' . dict($skel, 'admin_back2overview') . '</a></p>';
 
@@ -140,7 +144,7 @@ if ('editoverview' == $action && isLoggedIn())
 } else if ('editgallery' == $action && isLoggedIn())
 {
 
-	$body .= '<h1>Admin - ' . dict($skel, 'admin_editgallery') . '</h1>';
+	$body .= '<h1 class="first">Admin - ' . dict($skel, 'admin_editgallery') . '</h1>';
 	$gallery = getRequestParam('gallery', null);
 
 	if (isset($_POST['savebtn']))
@@ -164,7 +168,7 @@ if ('editoverview' == $action && isLoggedIn())
 	$body .= '</form>';
 } else
 {
-	$body .= '<h1>Admin - ' . dict($skel, 'admin_login') . '</h1>';
+	$body .= '<h1 class="first">Admin - ' . dict($skel, 'admin_login') . '</h1>';
 
 	$body .= '<p>' . dict($skel, 'admin_welcome') . "</p>\n";
 	$body .= '<div id="loginform"><form action="' . $skel['base_uri'] . $skel['base_uri_mask'] . 'edit/login/" method="post">';
