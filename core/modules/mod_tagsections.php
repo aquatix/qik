@@ -221,30 +221,6 @@ function getFlag($skel, $key)
 }
 
 
-function getGallery_old($skel, $key)
-{
-	$items = getItems($skel, "gallery", $key);
-	if (!is_array($items))
-	{
-		/* Something went wrong, return the message */
-		return $items;
-	}
-
-	$result = '';
-	for ($i = 0; $i < count($items); $i++)
-	{
-		if ('' != trim($items[$i]))
-		{
-			$title = getKey($items[$i]);
-			$file = getValue($items[$i]);
-			//$result .= "<img src=\"images/gallery/" . $file . "\" alt=\"" . $title . "\" /><br />\n";
-			$result .= "<img src=\"images/gallery/" . $file . "\" alt=\"" . $title . "\" />\n<p><em>" . $title . "</em></p>\n";
-		}
-	}
-	return $result;
-}
-
-
 function getGallery($skel, $key)
 {
 	$items = getItems($skel, 'gallery', $key);
@@ -262,7 +238,8 @@ function getGallery($skel, $key)
 		$galleryname = $parts[0];
 	}
 
-	$result = '';
+	//$galleryitems = new array();
+	$imagecounter = 0;
 	for ($i = 0; $i < count($items); $i++)
 	{
 		if ('' != trim($items[$i]))
@@ -273,23 +250,19 @@ function getGallery($skel, $key)
 			{
 				$file = 'images/gallery/' . $file;
 			}
-			//$result .= "<img src=\"images/gallery/" . $file . "\" alt=\"" . $title . "\" /><br />\n";
-			//$filename = 'images/gallery/thumbs/' . str_replace('/', '_', $file);
-			//$image_name = realpath(dirname(__FILE__) . '/../') . '/' . $filename;
 			$filename = 'images/gallery/thumbs/' . $galleryname . '_' . ($i + 1) . '.jpg';
 			$image_name = realpath(dirname(__FILE__)) . '/../images/gallery/thumbs/'. $galleryname . '_' . ($i + 1) . '.jpg';
 			if(!file_exists($image_name)) 
 			{
-				//$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $file;
 				$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $galleryname . '/' . ($i + 1) . '/';
 			}
-			$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<p>" . $title . "</p>\n</div>\n";
-			//$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a>\n<div class=\"text\"><span>" . $title . "</span></div>\n</div>\n";
-			//$result .= "<div class=\"galleryimage\"><a href=\"" . $file . "\"><img src=\"" . $filename . "\" alt=\"" . $title . "\" /></a><div class=\"caption\">\n<p>" . $title . "</p></div>\n</div>\n";
+			$galleryitems[$imagecounter]['filename'] = $filename;
+			$galleryitems[$imagecounter]['title'] = $title;
+			$galleryitems[$imagecounter]['targetfilename'] = $file;
+			$imagecounter++;
 		}
 	}
-	//$result = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $result);
-	return $result;
+	return buildGallery($skel, $galleryname, $galleryitems);
 }
 
 ?>
