@@ -1,7 +1,7 @@
 <?php
 /**
  * mod_toolkit.php - Useful functions for doing operations on text, converting items etc
- * v0.2.01 2007-09-09
+ * v0.2.02 2008-01-03
  * Copyright 2005-2007 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -599,5 +599,13 @@ function delfile($str)
 		unlink($fn);
 	}
 } 
+
+
+function browserIsIE()
+{
+	/* Check for IE with it's stupid width bugs */
+	$useragent = getenv("HTTP_USER_AGENT");
+	return (eregi("msie", $useragent) && !(eregi("opera", $useragent) || eregi("gecko", $useragent)));
+}
 
 ?>
