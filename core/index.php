@@ -1,7 +1,7 @@
 <?php
 /**
  * index.php - Main file for the Qik framework
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * Copyright 2005-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholtNOSPAM@aquariusoft.org]
@@ -24,11 +24,16 @@
 
 /*** Initializing ***/
 
-//error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
-error_reporting( E_ALL );	// set all on
-//error_reporting(0);		// set all off
+if (isset($skel['debugmode']) && true == $skel['debugmode'])
+{
+	//error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
+	error_reporting( E_ALL );	// set all on
+} else
+{
+	error_reporting(0);		// set all off, default
+}
 
-$skel['version'] = '0.2.02 2007-09-10';
+$skel['version'] = '0.2.03 2008-01-10';
 
 $skel['base_dir'] = dirname(__FILE__);
 include_once('modules/mod_framework.php');
