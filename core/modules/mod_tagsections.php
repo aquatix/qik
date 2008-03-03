@@ -256,7 +256,14 @@ function getGallery($skel, $key)
 			{
 				$filename = $skel['base_uri'] . 'viewimage/gallery/thumb/' . $galleryname . '/' . ($i + 1) . '/';
 			}
+			$hoverfilename = 'images/gallery/thumbs/hover/' . $galleryname . '_' . ($i + 1) . '.jpg';
+			$image_name = realpath(dirname(__FILE__)) . '/../images/gallery/thumbs/hover/'. $galleryname . '_' . ($i + 1) . '.jpg';
+			if(!file_exists($image_name)) 
+			{
+				$hoverfilename = $skel['base_uri'] . 'viewimage/gallery/thumb/hover/' . $galleryname . '/' . ($i + 1) . '/';
+			}
 			$galleryitems[$imagecounter]['filename'] = $filename;
+			$galleryitems[$imagecounter]['hoverfilename'] = $hoverfilename;
 			$galleryitems[$imagecounter]['title'] = $title;
 			$galleryitems[$imagecounter]['targetfilename'] = $file;
 			$imagecounter++;
