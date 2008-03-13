@@ -127,6 +127,7 @@ if ('editoverview' == $action && isLoggedIn())
 		$filename = getHTMLFilename($skel, $section, $page);
 		$body .= '<p><em>' . dict($skel, 'admin_savedpage') . ': ' . $filename . '</em></p>';
 		$pagecontent = str_replace("\r\n", "\n", getRequestParam('pagecontent', null));
+		$pagecontent = sanitiseHtml($pagecontent);
 		//echo '|||' . $pagecontent . '|||';
 		$file = fopen($skel['base_dir'] . '/' . $filename, "w");
 		fputs($file, $pagecontent);
@@ -143,7 +144,6 @@ if ('editoverview' == $action && isLoggedIn())
 	$body .= '</form>';
 } else if ('editgallery' == $action && isLoggedIn())
 {
-
 	$body .= '<h1 class="first">Admin - ' . dict($skel, 'admin_editgallery') . '</h1>';
 	$gallery = getRequestParam('gallery', null);
 
@@ -152,6 +152,7 @@ if ('editoverview' == $action && isLoggedIn())
 		$filename = getFilesname($skel, 'gallery', $gallery);
 		$body .= '<p><em>' . dict($skel, 'admin_savedgallery') . ': ' . $filename . '</em></p>';
 		$pagecontent = str_replace("\r\n", "\n", getRequestParam('pagecontent', null));
+		$pagecontent = sanitiseHtml($pagecontent);
 		$file = fopen($skel['base_dir'] . '/' . $filename, "w");
 		fputs($file, $pagecontent);
 		fclose($file);
