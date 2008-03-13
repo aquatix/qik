@@ -397,6 +397,11 @@ function getRequestParam($paramname, $default=null)
 			return intval($_REQUEST[$paramname]);
 		} else
 		{
+			if (get_magic_quotes_gpc())
+			{
+				/* Remove \'s inserted by the server in front of ' and " */
+				return stripslashes($_REQUEST[$paramname]);
+			}
 			return $_REQUEST[$paramname];
 		}
 	} else
@@ -608,4 +613,14 @@ function browserIsIE()
 	return (eregi("msie", $useragent) && !(eregi("opera", $useragent) || eregi("gecko", $useragent)));
 }
 
+
+/* Change characters with accents, `nice' quotes etc to their html &code; equivalent */
+function sanitiseHtml($html)
+{
+	/* @TODO: finish adding all chars */
+	$lookfor = array('é', '‘', '’');
+	$replacements = array('&eacute;', '\'', '\'');
+	$html = str_replace($replacements, $lookfor, $html);
+	return $html;
+}
 ?>
