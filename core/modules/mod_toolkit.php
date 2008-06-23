@@ -672,29 +672,8 @@ function isValidEmail($email)
 	return true;
 }
 
-function sendEmail($skel, $from, $from_name, $to, $subject, $body)
+function sendEmail($from, $from_name, $to, $subject, $body)
 {
-	/*
-	$MP = $skel['mailPath'];
-	$spec_envelope = 1;
-	// Access Sendmail
-	// Conditionally match envelope address
-	if($spec_envelope)
-	{
-		$MP .= ' -f ' . $from;
-	}
-	$fd = popen($MP, 'w');
-	//fputs($fd, "To: " . $announce_to_email . "\n");
-	fputs($fd, 'To: ' . $to . "\n");
-	fputs($fd, 'From: ' . $from_name . " <" . $from . ">\n");
-	fputs($fd, 'Subject: ' . $subject . "\n");
-	fputs($fd, "X-Mailer: PHP5\n\n");
-	fputs($fd, $body);
-	pclose($fd);
-	// Done with email
-
-	return 1;
-	*/
 	$header = 'From: "' . $from_name . '" <' . $from . ">\r\n";
 	mail($to, $subject, $body, $header);
 }
