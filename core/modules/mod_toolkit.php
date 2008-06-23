@@ -1,8 +1,9 @@
 <?php
 /**
  * mod_toolkit.php - Useful functions for doing operations on text, converting items etc
- * v0.2.02 2008-01-03
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * $Id: $
+ * v0.2.03 2008-06-23
+ * Copyright 2005-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -622,5 +623,58 @@ function sanitiseHtml($html)
 	$replacements = array('&eacute;', '\'', '\'');
 	$html = str_replace($replacements, $lookfor, $html);
 	return $html;
+}
+
+/* Checks whether e-mail address is valid [http://www.phpit.net/code/valid-email/] */
+function isValidEmail($email)
+{
+	// First, we check that there's one @ symbol, and that the lengths are right
+	if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $email)) {
+		// Email invalid because wrong number of characters in one section, or wrong number of @ symbols.
+		return false;
+	}
+	// Split it into sections to make life easier
+	$email_array = explode("@", $email);
+	$local_array = explode(".", $email_array[0]);
+	for ($i = 0; $i < sizeof($local_array); $i++) {
+		if (!ereg("^(([A-Za-z0-9!#$%&#038;'*+/=?^_`{|}~-][A-Za-z0-9!#$%&#038;'*+/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$", $local_array[$i])) {
+			return false;
+		}
+	}  
+	if (!ereg("^\[?[0-9\.]+\]?$", $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
+		$domain_array = explode(".", $email_array[1]);
+		if (sizeof($domain_array) < 2) {
+			return false; // Not enough parts to domain
+		}
+		for ($i = 0; $i < sizeof($domain_array); $i++) {
+			if (!ereg("^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$", $domain_array[$i])) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+function sendEmail($skel, $from, $from_name, $to, $subject, $body)
+{
+	$MP = $skel['mailPath'];
+	$spec_envelope = 1;
+	// Access Sendmail
+	// Conditionally match envelope address
+	if($spec_envelope)
+	{
+		$MP .= ' -f ' . $from;
+	}
+	$fd = popen($MP, 'w');
+	//fputs($fd, "To: " . $announce_to_email . "\n");
+	fputs($fd, 'To: ' . $to . "\n");
+	fputs($fd, 'From: ' . $from_name . " <" . $from . ">\n");
+	fputs($fd, 'Subject: ' . $subject . "\n");
+	fputs($fd, "X-Mailer: PHP5\n\n");
+	fputs($fd, $body);
+	pclose($fd);
+	// Done with email
+
+	return 1;
 }
 ?>
