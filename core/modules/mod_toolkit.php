@@ -1,8 +1,8 @@
 <?php
 /**
- * mod_toolkit.php - Useful functions for doing operations on text, converting items etc
  * $Id: $
- * v0.2.03 2008-06-23
+ * mod_toolkit.php - Useful functions for doing operations on text, converting items etc
+ * v0.2.04 2008-06-23
  * Copyright 2005-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -624,6 +624,23 @@ function sanitiseHtml($html)
 	$html = str_replace($replacements, $lookfor, $html);
 	return $html;
 }
+
+
+function limit_text($haystack, $needle, $limit = 0) {
+	/* Look for first occurrance of $needle */
+	//$paragraph = stristr($text, '</p>');
+	$pos = stripos($haystack, $needle) + strlen($needle);
+	$text = substr($haystack, 0, $pos);
+	/* Remove all html tags [including images etc] */
+	$text = strip_tags($text);
+	/* Limit text to $maxchar if wanted */
+	if ($limit > 0)
+	{
+		$text = substr($text, 0, $maxchar);
+	}
+	return $text;
+}
+
 
 /* Checks whether e-mail address is valid [http://www.phpit.net/code/valid-email/] */
 function isValidEmail($email)
