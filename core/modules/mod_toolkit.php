@@ -674,6 +674,7 @@ function isValidEmail($email)
 
 function sendEmail($skel, $from, $from_name, $to, $subject, $body)
 {
+	/*
 	$MP = $skel['mailPath'];
 	$spec_envelope = 1;
 	// Access Sendmail
@@ -693,5 +694,8 @@ function sendEmail($skel, $from, $from_name, $to, $subject, $body)
 	// Done with email
 
 	return 1;
+	*/
+	$header = 'From: "' . $from_name . '" <' . $from . ">\r\n";
+	mail($to, $subject, $body, $header);
 }
 ?>
