@@ -116,11 +116,16 @@ if ('sitemap' == $action)
 	$date = getRequestParam('date', null);
 	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
 	addToLog($skel, 'special', 'viewlog', 200);
-} else if ('makethumb' == $action)
+} else if ('makethumb' == $action || 'makehover' == $action)
 {
 	/* index.php was called to generate a thumbnail. In this mode it will only generate a picture, output it to stdout and save it */
 	$kind = getRequestParam('kind', null);
 	$filename = null;
+	$special = '';
+	if ('makehover' == $action)
+	{
+		$special = 'hover/';
+	}
 	if ('gallery' == $kind)
 	{
 		$gallery = getRequestParam('gallery', null);
@@ -132,10 +137,16 @@ if ('sitemap' == $action)
 			/* It's a local image */
 			$filename = realpath(dirname(__FILE__)) . '/images/gallery/' . $filename;
 		}
-		$destfile = realpath(dirname(__FILE__)) . '/images/gallery/thumbs/'. $gallery . '_' . $file . '.jpg';
+		$destfile = realpath(dirname(__FILE__)) . '/images/gallery/thumbs/' . $special . $gallery . '_' . $file . '.jpg';
 	}
 	header("Content-type: image/jpeg");
-	makeThumbnail($filename, $skel['thumbsize'], $destfile);
+	if ('makehover' == $action)
+	{
+		makeThumbnail($filename, $skel['hoversize'], $destfile);
+	} else
+	{
+		makeThumbnail($filename, $skel['thumbsize'], $destfile);
+	}
 	exit;
 } else
 {
