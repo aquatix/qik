@@ -24,6 +24,7 @@
 	RewriteRule ^page/viewlog index.php?action=viewlog
 	RewriteRule ^viewimage/thumb/(.*) image.php?action=makethumb&filename=$1
 	RewriteRule ^viewimage/gallery/thumb/([^/]+)/([0-9]+)/ index.php?action=makethumb&kind=gallery&gallery=$1&file=$2
+	RewriteRule ^gallery/([^/]+)/([0-9]+)/ index.php?action=viewgallery&gallery=$1&file=$2
 	RewriteRule ^page/([^/]+)/([^/]+) index.php?section=$1&page=$2
 	RewriteRule ^page/([^/]+) index.php?section=$1
 </IfModule>
