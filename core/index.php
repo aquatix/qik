@@ -116,6 +116,16 @@ if ('sitemap' == $action)
 	$date = getRequestParam('date', null);
 	$body .= buildVisitsLogOverview($skel, $logaction, $offset, $date);
 	addToLog($skel, 'special', 'viewlog', 200);
+} else if ('viewgallery' == $action)
+{
+	$gallery = getRequestParam('gallery', null);
+	$file = getRequestParam('file', -1);
+	//$galleryItems = getItems($skel, 'gallery', $gallery . ':' . $file . ':' . $file);
+	$galleryItems = getGallery($skel, $gallery);
+	$body = buildGalleryPage($skel, $gallery, $galleryItems, $file);
+//echo $body;
+	echo processTags($skel, $body);
+	exit;
 } else if ('makethumb' == $action || 'makehover' == $action)
 {
 	/* index.php was called to generate a thumbnail. In this mode it will only generate a picture, output it to stdout and save it */
@@ -139,7 +149,7 @@ if ('sitemap' == $action)
 		}
 		$destfile = realpath(dirname(__FILE__)) . '/images/gallery/thumbs/' . $special . $gallery . '_' . $file . '.jpg';
 	}
-	header("Content-type: image/jpeg");
+	header('Content-type: image/jpeg');
 	if ('makehover' == $action)
 	{
 		makeThumbnail($filename, $skel['hoversize'], $destfile);
