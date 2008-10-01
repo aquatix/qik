@@ -1,8 +1,8 @@
 <?php
 /**
- * $Id: $
  * mod_toolkit.php - Useful functions for doing operations on text, converting items etc
- * v0.2.04 2008-06-23
+ * $Id$
+ * v0.2.05 2008-06-24
  * Copyright 2005-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
@@ -674,7 +674,17 @@ function isValidEmail($email)
 
 function sendEmail($from, $from_name, $to, $subject, $body)
 {
-	$header = 'From: "' . $from_name . '" <' . $from . ">\r\n";
-	mail($to, $subject, $body, $header);
+	$header = 'From: "' . makeValidField($from_name) . '" <' . makeValidField($from) . ">\r\n";
+	mail(makeValidField($to), $subject, $body, $header);
+}
+
+
+/* Takes $text and strips out line feeds and html markup */
+function makeValidField($text)
+{
+	$text = str_replace("\r", '', $text);
+	$text = str_replace("\n", ' ', $text);
+	$text = strip_tags($text);
+	return $text;
 }
 ?>
