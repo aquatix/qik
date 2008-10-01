@@ -30,10 +30,10 @@ if (!isset($skel['thumbsize']))
 function processTags($skel, $body)
 {
 	$body = expandTags($skel, $body);
-	$body = str_replace("src=\"image", "src=\"" . $skel["base_uri"] . "image", $body);
-	$body = str_replace("href=\"image", "href=\"" . $skel["base_uri"] . "image", $body);
-	$body = str_replace("href=\"files", "href=\"" . $skel["base_uri"] . "files", $body);
-	$body = str_replace("href=\"page", "href=\"" . $skel["base_uri"] . "page", $body);
+	$body = str_replace('src="image', 'src="' . $skel['base_uri'] . 'image', $body);
+	$body = str_replace('href="image', 'href="' . $skel['base_uri'] . 'image', $body);
+	$body = str_replace('href="files', 'href="' . $skel['base_uri'] . 'files', $body);
+	$body = str_replace('href="page', 'href="' . $skel['base_uri'] . 'page', $body);
 	//$body = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $body);
 	return $body;
 }
@@ -75,7 +75,17 @@ function expandTags($skel, $body)
 				$result .= getFlag($skel, $keyvalue[1]);
 			} else if ($keyvalue[0] == "gallery")
 			{
-				$result .= getGallery($skel, $keyvalue[1]);
+				/* Get gallery name */
+				$galleryname = null;
+				$parts = explode(':', $keyvalue[1]);
+				//$parts = explode(':', $key);
+				if ('' != $parts[0])
+				{
+					$galleryname = $parts[0];
+				}
+				//$galleryitems .= getGallery($skel, $keyvalue[1]);
+				$galleryitems = getGallery($skel, $galleryname);
+				$result .= buildGallery($skel, $galleryname, $galleryitems);
 			} else
 			{
 				$result .= "<p>" . dict($skel, "key_x_not_understood", $pieces[$i]) . "</p>\n";
@@ -266,10 +276,11 @@ function getGallery($skel, $key)
 			$galleryitems[$imagecounter]['hoverfilename'] = $hoverfilename;
 			$galleryitems[$imagecounter]['title'] = $title;
 			$galleryitems[$imagecounter]['targetfilename'] = $file;
+			$galleryitems[$imagecounter]['galleryitem'] = $skel['base_uri'] . 'gallery/' . $galleryname . '/' . ($i + 1) . '/';
 			$imagecounter++;
 		}
 	}
-	return buildGallery($skel, $galleryname, $galleryitems);
+	return $galleryitems;
 }
 
 ?>
