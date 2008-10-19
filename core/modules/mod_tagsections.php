@@ -22,6 +22,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once('mod_forms.php');
+
 if (!isset($skel['thumbsize']))
 {
 	$skel['thumbsize'] = 80;
@@ -34,6 +36,7 @@ function processTags($skel, $body)
 	$body = str_replace('href="image', 'href="' . $skel['base_uri'] . 'image', $body);
 	$body = str_replace('href="files', 'href="' . $skel['base_uri'] . 'files', $body);
 	$body = str_replace('href="page', 'href="' . $skel['base_uri'] . 'page', $body);
+	$body = str_replace('href="forms', 'href="' . $skel['base_uri'] . 'forms', $body);
 	//$body = str_replace('href="viewimage', 'href="' . $skel['base_uri'] . 'viewimage', $body);
 	return $body;
 }
@@ -73,6 +76,9 @@ function expandTags($skel, $body)
 			} else if ($keyvalue[0] == "flag")
 			{
 				$result .= getFlag($skel, $keyvalue[1]);
+			} else if ($keyvalue[0] == 'dict')
+			{
+				$result .= dict($skel, $keyvalue[1]);
 			} else if ($keyvalue[0] == "gallery")
 			{
 				/* Get gallery name */
@@ -282,5 +288,4 @@ function getGallery($skel, $key)
 	}
 	return $galleryitems;
 }
-
 ?>

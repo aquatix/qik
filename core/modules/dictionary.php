@@ -52,6 +52,10 @@
 		$skel['dict']['next'] = 'Volgende';
 		$skel['dict']['last'] = 'Laatste';
 
+		$skel['dict']['form_need_valid_email'] = 'Een geldig e-mailadres is noodzakelijk';
+		$skel['dict']['form_isrequired_field'] = 'Dit veld is verplicht';
+		$skel['dict']['submit'] = 'Verstuur';
+
 		$skel['dict']['errormessage'] = 'Foutmelding';
 		$skel['dict']['section_not_found'] = 'Sectie niet gevonden';
 		$skel['dict']['page_x_not_found'] = 'pagina "%s" niet gevonden';
@@ -87,6 +91,10 @@
 		$skel['dict']['previous'] = 'Previous';
 		$skel['dict']['next'] = 'Next';
 		$skel['dict']['last'] = 'Last';
+
+		$skel['dict']['form_need_valid_email'] = 'A valid e-mail address is needed';
+		$skel['dict']['form_isrequired_field'] = 'This field is required';
+		$skel['dict']['submit'] = 'Submit';
 
 		$skel['dict']['errormessage'] = 'Error message';
 		$skel['dict']['section_not_found'] = 'Section not found';

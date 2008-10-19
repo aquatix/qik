@@ -24,6 +24,11 @@
 
 /*** Initializing ***/
 
+$skel['version'] = '0.2.03 2008-01-10';
+
+$skel['base_dir'] = dirname(__FILE__);
+include_once('modules/mod_framework.php');
+
 if (isset($skel['debugmode']) && true == $skel['debugmode'])
 {
 	//error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );	// set all on
@@ -32,11 +37,6 @@ if (isset($skel['debugmode']) && true == $skel['debugmode'])
 {
 	error_reporting(0);		// set all off, default
 }
-
-$skel['version'] = '0.2.03 2008-01-10';
-
-$skel['base_dir'] = dirname(__FILE__);
-include_once('modules/mod_framework.php');
 
 /* N.B.: User should provide the site/pagetemplate.php */
 
@@ -120,10 +120,8 @@ if ('sitemap' == $action)
 {
 	$gallery = getRequestParam('gallery', null);
 	$file = getRequestParam('file', -1);
-	//$galleryItems = getItems($skel, 'gallery', $gallery . ':' . $file . ':' . $file);
 	$galleryItems = getGallery($skel, $gallery);
 	$body = buildGalleryPage($skel, $gallery, $galleryItems, $file);
-//echo $body;
 	echo processTags($skel, $body);
 	exit;
 } else if ('makethumb' == $action || 'makehover' == $action)
