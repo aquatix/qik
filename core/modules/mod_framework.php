@@ -1,7 +1,8 @@
 <?php
 /**
  * mod_framework.php - Qik site framework setup
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * $Id$
+ * Copyright 2005-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -21,7 +22,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$skel['frameworkversion'] = '0.2.01 2007-09-09';
+$skel['frameworkversion'] = '0.2.02 2008-10-19';
 $skel['starttime'] = microtime();
 
 chdir($skel['base_dir']);
@@ -43,7 +44,7 @@ if ($skel['usedb'])
 include_once('modules/mod_toolkit.php');
 /* Module for actually building parts of the pages */
 include_once('modules/mod_site.php');
-/* Module for expanding tags like @@NEWS@@ to the actual news */
+/* Module for expanding tags like @@@tile=tilename@@@ to the actual tile file's contents */
 include_once('modules/mod_tagsections.php');
 
 /* Module for logging support */
@@ -75,7 +76,8 @@ if ('//' == $skel['base_uri'])
 }
 if (isset($skel['base_uri_mask']))
 {
-	$skel['base_uri'] = substr($skel['base_uri'], strlen($skel['base_uri_mask']));
+	//$skel['base_uri'] = substr($skel['base_uri'], strlen($skel['base_uri_mask']));
+	$skel['base_uri'] = str_replace($skel['base_uri_mask'], '', $skel['base_uri']);
 }
 
 $url_pieces = parse_url(getenv('SCRIPT_URI'));
