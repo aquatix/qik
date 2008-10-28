@@ -153,7 +153,20 @@ class FormBlock
 	{
 		$this->formItems[count($this->formItems)] = $item;
 	}
-	
+
+	/* Looks for FormItem with $tag */
+	public function getItem($tag)
+	{
+		for ($i = 0; $i < count($this->formItems); $i++)
+		{
+			if ($this->formItems[$i]->getTag() == $tag)
+			{
+				return $this->formItems[$i];
+			}
+		}
+		return null;
+	}
+
 	public function readFromPost()
 	{
 		$allGood = true;
@@ -177,7 +190,7 @@ class FormBlock
 			{
 				$this->formItems[$i]->setError('form_isrequired_field');
 				$allGood = false;
-			} else if ($this->formItems[$i]->isEmail() && !isValidEmail($newValue))
+			} else if ($this->formItems[$i]->isEmail() && '' != trim($newValue) && !isValidEmail($newValue))
 			{
 				$this->formItems[$i]->setError('form_need_valid_email');
 				$allGood = false;
