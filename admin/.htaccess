@@ -1,0 +1,33 @@
+#<Files ~ "/site">
+#	Order allow,deny
+#	Deny from all
+#</Files>
+
+<Files ~ ".desc">
+	Order allow,deny
+	Deny from all
+</Files>
+
+<Files ~ ".section">
+	Order allow,deny
+	Deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^page/([^/]+)/sitemap index.php?action=sitemap&language=$1
+	RewriteRule ^page/error/([^/]+)/ index.php?section=error&page=$1&language=en
+	RewriteRule ^page/([^/]+)/([^/]+)/([^/]+) index.php?section=$2&page=$3&language=$1
+	RewriteRule ^page/([^/]+)/([^/]+) index.php?section=$2&language=$1
+
+#	RewriteRule ^edit/overview/ index.php?action=editoverview
+	RewriteRule ^edit/login/ index.php?action=login
+	RewriteRule ^edit/([^/]+)/([^/]+)/([^/]+) index.php?action=editpage&section=$2&page=$3&language=$1
+	RewriteRule ^edit/([^/]+)/([^/]+) index.php?action=editpage&section=$2&language=$1
+	RewriteRule ^edit/ index.php?action=editoverview
+
+	RewriteRule ^gallery/login/ index.php?action=login
+	RewriteRule ^gallery/([^/]+)/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$2&page=$3&language=$1
+	RewriteRule ^gallery/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$2&language=$1
+	RewriteRule ^gallery/ index.php?action=editoverview
+</IfModule>
