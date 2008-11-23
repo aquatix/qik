@@ -22,11 +22,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define(FORMITEM_TEXT, 'text');
-define(FORMITEM_EMAIL, 'email');
-define(FORMITEM_PASSWORD, 'password');
-define(FORMITEM_CHECKBOX, 'checkbox');
-define(FORMITEM_RADIO, 'radio');
+define('FORMITEM_TEXT', 'text');
+define('FORMITEM_EMAIL', 'email');
+define('FORMITEM_PASSWORD', 'password');
+define('FORMITEM_CHECKBOX', 'checkbox');
+define('FORMITEM_RADIO', 'radio');
 
 /*
  * Form item, an input of the kind:
