@@ -20,14 +20,31 @@
 	RewriteRule ^page/([^/]+)/([^/]+)/([^/]+) index.php?section=$2&page=$3&language=$1
 	RewriteRule ^page/([^/]+)/([^/]+) index.php?section=$2&language=$1
 
-#	RewriteRule ^edit/overview/ index.php?action=editoverview
+	RewriteRule ^edit/overview/ index.php?action=editoverview
 	RewriteRule ^edit/login/ index.php?action=login
-	RewriteRule ^edit/([^/]+)/([^/]+)/([^/]+) index.php?action=editpage&section=$2&page=$3&language=$1
-	RewriteRule ^edit/([^/]+)/([^/]+) index.php?action=editpage&section=$2&language=$1
-	RewriteRule ^edit/ index.php?action=editoverview
+	# Multi-language
+        #RewriteRule ^edit/([^/]+)/([^/]+)/([^/]+) index.php?action=editpage&section=$2&page=$3&language=$1
+        #RewriteRule ^edit/([^/]+)/([^/]+) index.php?action=editpage&section=$2&language=$1
+	# Single-language
+        RewriteRule ^edit/([^/]+)/([^/]+) index.php?action=editpage&section=$1&page=$2
+        RewriteRule ^edit/([^/]+) index.php?action=editpage&section=$1
+        RewriteRule ^edit/ index.php?action=editoverview
 
-	RewriteRule ^gallery/login/ index.php?action=login
-	RewriteRule ^gallery/([^/]+)/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$2&page=$3&language=$1
-	RewriteRule ^gallery/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$2&language=$1
-	RewriteRule ^gallery/ index.php?action=editoverview
+        RewriteRule ^gallery/login/ index.php?action=login
+	# Multi-language
+        #RewriteRule ^gallery/([^/]+)/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$2&page=$3&language=$1
+        #RewriteRule ^gallery/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$2&language=$1
+	# Single-language
+        RewriteRule ^gallery/([^/]+)/([^/]+) index.php?action=editgallery&gallery=$1&page=$2
+        RewriteRule ^gallery/([^/]+) index.php?action=editgallery&gallery=$1
+        RewriteRule ^gallery/ index.php?action=editoverview
+
+	RewriteRule ^news/login/ index.php?action=login
+	# Multi-language
+	#RewriteRule ^news/([^/]+)/([^/]+)/([^/]+) index.php?action=editnews&news=$2&page=$3&language=$1
+	#RewriteRule ^news/([^/]+)/([^/]+) index.php?action=editnews&news=$2&language=$1
+	# Single-language
+        RewriteRule ^news/([^/]+)/([^/]+) index.php?action=editnews&news=$1&page=$2
+        RewriteRule ^news/([^/]+) index.php?action=editnews&news=$1
+	RewriteRule ^news/ index.php?action=editoverview
 </IfModule>

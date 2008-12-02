@@ -1,8 +1,9 @@
 <?php
 /**
  * mod_admin.php - Module with supporting functions for the admin function of the Qik framework
- * v0.2.01 2007-09-09
- * Copyright 2007-2007 mbscholt at aquariusoft.org
+ * $Id$
+ * v0.2.02 2008-12-02
+ * Copyright 2007-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -23,10 +24,8 @@
  */
 
 
-function getGalleries($skel)
+function getFileItems($dirpath)
 {
-	$dirpath = 'site/' . getLanguageKey($skel) . 'gallery/';
-
 	$dh = opendir($dirpath);
 
 	$result = array();
@@ -37,7 +36,6 @@ function getGalleries($skel)
 		//Don't list subdirectories
 		if (!is_dir("$dirpath/$file"))
 		{
-			//$result[$counter] = str_replace('.desc', '', $file) . '=' . $file . "\n";
 			$result[$counter] = str_replace('.desc', '', $file);
 			$counter++;
 		}
@@ -45,21 +43,43 @@ function getGalleries($skel)
 	closedir($dh);
 
 	return $result;
-
 }
+
+
+function buildItemsOverview($skel, $items, $kind)
+{
+	$result = "<ul>\n";
+	
+	for ($i = 0; $i < count($items); $i++)
+	{
+		$result .= "\t<li><a href=\"" . $skel['base_uri'] . 'admin/' . $kind . '/' . getLanguageKey($skel) . $items[$i] . "\">" . $items[$i] . "</a></li>\n";
+	}
+	$result .= "</ul>\n";
+	return $result;
+}
+
+
+function getGalleries($skel)
+{
+	$dirpath = 'site/' . getLanguageKey($skel) . 'gallery/';
+	return getFileItems($dirpath);
+}
+
 
 function buildGalleryOverview($skel)
 {
-	$galleries = getGalleries($skel);
-	//print_r($galleries);
-	$result = "<ul>\n";
-	
-		for ($i = 0; $i < count($galleries); $i++)
-	{
-		$result .= "\t<li><a href=\"" . $skel['base_uri'] . 'admin/gallery/' . getLanguageKey($skel) . $galleries[$i] . "\">" . $galleries[$i] . "</a></li>\n";
+	return buildItemsOverview($skel, getGalleries($skel), 'gallery');
 }
-	$result .= "</ul>\n";
-	return $result;
+
+function getNewsfiles($skel)
+{
+	$dirpath = 'site/' . getLanguageKey($skel) . 'news/';
+	return getFileItems($dirpath);
+}
+
+function buildNewsOverview($skel)
+{
+	return buildItemsOverview($skel, getNewsFiles($skel), 'news');
 }
 
 ?>
