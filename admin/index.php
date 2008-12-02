@@ -1,7 +1,8 @@
 <?php
 /**
  * index.php - Qik admin module for changing texts, and maybe later even edit sections and such
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * $Id$
+ * Copyright 2005-2008 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -25,10 +26,10 @@
 /* Initialise framework */
 
 //error_reporting( E_ERROR | E_WARNING | E_PARSE | E_NOTICE );  // set all on
-error_reporting( E_ALL );
-//error_reporting(0);     // set all off
+//error_reporting( E_ALL );
+error_reporting(0);     // turn all off
 
-$skel['version'] = '0.2.03 2007-12-12';
+$skel['version'] = '0.2.04 2008-12-02';
 
 $skel['base_dir'] = dirname(dirname(__FILE__));
 $skel['base_uri_mask'] = 'admin/'; /* We are in a subdir, so the framework needs to know that */
@@ -113,6 +114,9 @@ if ('editoverview' == $action && isLoggedIn())
 	$body .= '<h2>' . dict($skel, 'admin_galleries') . '</h2>';
 	$body .= buildGalleryOverview($skel);
 
+	$body .= '<h2>' . dict($skel, 'admin_news') . '</h2>';
+	$body .= buildNewsOverview($skel);
+
 } else if ('editpage' == $action && isLoggedIn())
 {
 	$body  = '<h1 class="first">Admin - ' . dict($skel, 'admin_editpage') . '</h1>';
@@ -140,7 +144,7 @@ if ('editoverview' == $action && isLoggedIn())
 	//$content = str_replace('@', '&#64;', $content);
 	$body .= '<form action="" method="post">';
 	$body .= '<textarea name="pagecontent" rows="40" cols="100">' . str_replace('@', '&#64;', htmlentities($content)) . '</textarea>';
-	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
+	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'admin_save') . '" /></p>';
 	$body .= '</form>';
 } else if ('editgallery' == $action && isLoggedIn())
 {
@@ -165,7 +169,32 @@ if ('editoverview' == $action && isLoggedIn())
 	$content = getFileContents($skel, 'gallery', $gallery);
 	$body .= '<form action="" method="post">';
 	$body .= '<textarea name="pagecontent" rows="40" cols="100" wrap="off">' . str_replace('@', '&#64;', htmlentities($content)) . '</textarea>';
-	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'save') . '" /></p>';
+	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'admin_save') . '" /></p>';
+	$body .= '</form>';
+} else if ('editnews' == $action && isLoggedIn())
+{
+	$body .= '<h1 class="first">Admin - ' . dict($skel, 'admin_editnews') . '</h1>';
+	$gallery = getRequestParam('news', null);
+
+	if (isset($_POST['savebtn']))
+	{
+		$filename = getFilesname($skel, 'news', $gallery);
+		$body .= '<p><em>' . dict($skel, 'admin_savednews') . ': ' . $filename . '</em></p>';
+		$pagecontent = str_replace("\r\n", "\n", getRequestParam('pagecontent', null));
+		$pagecontent = sanitiseHtml($pagecontent);
+		$file = fopen($skel['base_dir'] . '/' . $filename, "w");
+		fputs($file, $pagecontent);
+		fclose($file);
+		/* rm all thumbnails; they are regenerated on next view of the gallery */
+		cleanThumbs($skel, str_replace('.desc', '', $gallery));
+	}
+
+	$body .= '<p>' . dict($skel, 'admin_editingnews') . ': ' . $gallery . '</p>';
+	$body .= '<p>' . dict($skel, 'admin_editingnews_explanation') . '</p>';
+	$content = getFileContents($skel, 'news', $gallery);
+	$body .= '<form action="" method="post">';
+	$body .= '<textarea name="pagecontent" rows="40" cols="100" wrap="off">' . str_replace('@', '&#64;', htmlentities($content)) . '</textarea>';
+	$body .= '<p><input type="submit" name="savebtn" value="' . dict($skel, 'admin_save') . '" /></p>';
 	$body .= '</form>';
 } else
 {
