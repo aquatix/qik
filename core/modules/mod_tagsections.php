@@ -1,8 +1,9 @@
 <?php
 /**
  * mod_tagsections.php - Module for expanding @@@key=value@@@-style tags
+ * $Id$
  * v0.2.01 2007-09-09
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -214,9 +215,7 @@ function getNews($skel, $key)
 		{
 			$title = getKey($items[$i]);
 			$content = getValue($items[$i]);
-			$result .= "<div class=\"news\">\n";
-			$result .= "\t<div class=\"date\">" . trim($title) . "</div>";
-			$result .= "<div class=\"newscontent\">" . str_replace("\\n", "\n", str_replace("\\t", "\t", trim($content))) . "</div>\n</div>\n\n";
+			$result .= buildNewsItem($skel, trim($title), str_replace("\\n", "\n", str_replace("\\t", "\t", trim($content))));
 		}
 	}
 	return $result;
