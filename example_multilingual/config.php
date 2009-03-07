@@ -11,6 +11,12 @@
 $skel['language'] = 'en';
 $skel['multilanguage'] = true;
 
+/* Enable or disable Qik's debug mode */
+$skel['debugmode'] = false;
+
+/* The title of the site, shown in the browser's titlebar */
+$skel['sitetitle'] = 'Qik example site (multilingual)';
+
 /* Additional information to be shown when a user gets a 'page not found' */
 $skel['404_message'] = '<p>If you are looking for the overload feedreader, please <a href="https://overload.aquariusoft.org">look at overloads new address</a></p>';
 //$skel['404_message'] .= '<p>Also, the bugtracker, gallery, forum and webmail and the weblog dammIT will be online again soon.</p>';
