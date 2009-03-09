@@ -1,9 +1,10 @@
 <?php
 /**
- * mod_qik_files.php - Module for getting the contents of the qik site -- flat files method
- *                     Used for abstrahizing the storage method, so you can transparantly switch between flat files and database
- * v0.2.01 2007-09-09
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * Module for getting the contents of the qik site -- flat files method
+ * Used for abstracting away the storage method, so you can transparantly switch between flat files and database
+ * $Id$
+ *
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]

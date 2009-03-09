@@ -1,7 +1,8 @@
 <?php
 /**
- * dictionary.php - Qik site framework dictionary file for multilanguage support
+ * Qik site framework dictionary file for multilanguage support
  * $Id$
+ * 
  * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
