@@ -1,10 +1,10 @@
 <?php
 /**
- * $Id$
- * googlesitemap.php - Generates sitemap XML for Qik site framework
+ * Generates sitemap XML for Qik site framework
  * https://www.google.com/webmasters/tools/docs/en/protocol.html
+ * $Id$
  *
- * Copyright 2008-2008 mbscholt at aquariusoft.org
+ * Copyright 2008-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]

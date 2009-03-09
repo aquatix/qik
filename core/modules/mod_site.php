@@ -1,8 +1,9 @@
 <?php
 /**
- * mod_site.php - Module for building most of the various content of the Qik site
- * v0.2.02 2007-09-10
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * Module for building most of the various content of the Qik site
+ * $Id$
+ *
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]

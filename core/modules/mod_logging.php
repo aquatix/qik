@@ -1,8 +1,9 @@
 <?php
 /**
- * mod_logging.php - Page hit logging support
- * v0.2.01 2007-09-09
- * Copyright 2005-2007 mbscholt at aquariusoft.org
+ * Page hit logging support
+ * $Id$
+ *
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -45,6 +46,9 @@ function getLoggedItems($skel, $offset, $number)
 }
 
 
+/*
+ * Return the total number of hits on the site
+ */
 function getNumberOfHits($skel)
 {
 	return logGetNumberOfHits($skel);
@@ -68,6 +72,9 @@ function getHitsPerPage($skel, $offset, $number, $date = null)
 }
 
 
+/*
+ * Return the number of 404's logged
+ */
 function get404s($skel)
 {
 	return logGet404s($skel);

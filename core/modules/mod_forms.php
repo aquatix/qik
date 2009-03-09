@@ -1,11 +1,12 @@
 <?php
 /**
- * mod_forms.php - Generate forms and repopulate after submit
+ * Generate forms and repopulate after submit
  * $Id$
- * Copyright 2008 mbscholt at aquariusoft.org
+ * 
+ * Copyright 2008-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
- * [mbscholtNOSPAM@aquariusoft.org]
+ * [mbscholt at aquariusoft.org]
  * Please refer to the COPYRIGHT file distributed with this source distribution.
  *
  * This program is free software; you can redistribute it and/or modify

@@ -1,8 +1,9 @@
 <?php
 /**
- * mod_framework.php - Qik site framework setup
+ * Qik site framework setup
  * $Id$
- * Copyright 2005-2008 mbscholt at aquariusoft.org
+ * 
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
