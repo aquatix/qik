@@ -2,7 +2,7 @@
 /**
  * mod_tagsections.php - Module for expanding @@@key=value@@@-style tags
  * $Id$
- * v0.2.01 2007-09-09
+ *
  * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten

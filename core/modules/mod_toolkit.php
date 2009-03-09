@@ -1,9 +1,9 @@
 <?php
 /**
- * mod_toolkit.php - Useful functions for doing operations on text, converting items etc
+ * Useful functions for doing operations on text, converting items etc
  * $Id$
- * v0.2.05 2008-06-24
- * Copyright 2005-2008 mbscholt at aquariusoft.org
+ *
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]

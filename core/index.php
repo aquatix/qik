@@ -1,10 +1,12 @@
 <?php
 /**
  * index.php - Main file for the Qik framework
- * Copyright 2005-2008 mbscholt at aquariusoft.org
+ * $Id$
+ *
+ * Copyright 2005-2009 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
- * [mbscholtNOSPAM@aquariusoft.org]
+ * [mbscholt at aquariusoft.org]
  * Please refer to the COPYRIGHT file distributed with this source distribution.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,7 +26,7 @@
 
 /*** Initializing ***/
 
-$skel['version'] = '0.2.03 2008-01-10';
+$skel['version'] = '0.2.08 2009-03-09';
 
 $skel['base_dir'] = dirname(__FILE__);
 include_once('modules/mod_framework.php');
