@@ -23,7 +23,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$skel['frameworkversion'] = '0.2.02 2008-10-19';
+$skel['frameworkversion'] = '0.2.03 2009-09-09';
 $skel['starttime'] = microtime();
 
 chdir($skel['base_dir']);
@@ -32,6 +32,9 @@ chdir($skel['base_dir']);
 include_once('config.php');
 /* Dictionary for the messages used by the framework */
 include_once('modules/dictionary.php');
+
+/* Detect mobile devices, module from http://www.hand-interactive.com/resources/detect-mobile-php.htm */
+include_once('modules/mdetect.php');
 
 if ($skel['usedb'])
 {
