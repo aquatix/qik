@@ -224,5 +224,5 @@ if ('sitemap' == $action)
 }
 
 $navbar = buildNav($skel, $sections);
-echo processTags($skel, buildPage($skel, $page_name, $navbar, $subnav, $body));
+echo processTags($skel, buildPage($skel, strip_tags($page_name), $navbar, $subnav, $body));
 ?>
