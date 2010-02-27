@@ -111,7 +111,19 @@ function buildSitemap($skel, $sections, $base='page', $omitsitemap=false)
 	{
 		$result = '<div class="updatedat">generated @ ' . date('Y-m-d') . "</div>\n";
 	}
-	$result .= "<ul>\n";
+	$result .= buildNavList($skel, $sections, $base, $omitsitemap, 'sitemap');
+
+	return $result;
+}
+
+
+function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listname = '')
+{
+	if ('' != $listname)
+	{
+		$listname = ' id="' . $listname . '"';
+	}
+	$result = "<ul" . $listname . ">\n";
 
 	for ($i = 0; $i < count($sections); $i++)
 	{
@@ -152,6 +164,7 @@ function buildSitemap($skel, $sections, $base='page', $omitsitemap=false)
 		}
 	}
 	$result .= "</ul>\n";
+
 	return $result;
 }
 
