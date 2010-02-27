@@ -75,7 +75,13 @@ function getName($items, $id)
 		{
 			if (getKey($items[$i]) == $id)
 			{
-				return getValue($items[$i]);
+				$value = getValue($items[$i]);
+				if ('.' == $value[0])
+				{
+					$value = substr($value, 1, strlen($value));
+				}
+				return $value;
+				//return getValue($items[$i]);
 			}
 		}
 	}
@@ -130,11 +136,12 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 		if ('' != trim($sections[$i]))
 		{
 			$key = getKey($sections[$i]);
-			if ('#' != $key[0] && '' != getValue($sections[$i]))	// '#' denotes comment
+			$value = getValue($sections[$i]);
+			if ('#' != $key[0] && '' != $value && '.' != $value[0])	// '#' denotes comment, value starting with a dot means hidden
 			{
 				if ('sitemap' != $key || ('sitemap' == $key && !$omitsitemap))
 				{
-					$result .= "\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . "/\">" . getValue($sections[$i]) . "</a>\n";
+					$result .= "\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . "/\">" . $value . "</a>\n";
 				}
 
 				if ('sitemap' == $key)
@@ -152,9 +159,10 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 						if ('' != trim($subsections[$j]))
 						{
 							$subkey = getKey($subsections[$j]);
-							if ('#' != $subkey[0] && '' != getValue($subsections[$j]))        // '#' denotes comment
+							$subvalue = getValue($subsections[$j]);
+							if ('#' != $subkey[0] && '' != $subvalue && '.' != $subvalue[0])        // '#' denotes comment
 							{
-								$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . getValue($subsections[$j]) . "</a></li>\n";
+								$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . $subvalue . "</a></li>\n";
 							}
 						}
 					}
