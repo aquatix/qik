@@ -166,8 +166,9 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 							}
 						}
 					}
-					$result .= "\t\t</ul>\n\t</li>\n";
+					$result .= "\t\t</ul>\n";
 				}
+				$result .= "\t</li>\n";
 			}
 		}
 	}
