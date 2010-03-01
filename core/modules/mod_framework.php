@@ -102,6 +102,4 @@ if (null == $sections)
 	exit;
 }
 $sections[count($sections)] = 'sitemap=' . dict($skel, 'sitemap');
-
-
 ?>
