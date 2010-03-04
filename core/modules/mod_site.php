@@ -126,7 +126,7 @@ function buildSitemap($skel, $sections, $base='page', $omitsitemap=false)
 /**
  * Build <ul> navigation list from sections and pages
  * Can omit the sitemap pseudosection; $listname id's the <ul> object;
- * $addactive adds 'class="highlight" to the currently selected section and page
+ * $addactive adds 'class="active" to the currently selected section and page
  */
 function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listname = '', $addactive = false)
 {
@@ -147,7 +147,7 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 				$active = '';
 				if (isset($skel['section']) && $key == $skel['section'])
 				{
-					$active = ' class="highlight"';
+					$active = ' class="active"';
 				}
 
 				if ('sitemap' != $key || ('sitemap' == $key && !$omitsitemap))
@@ -174,9 +174,9 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 							if ('#' != $subkey[0] && '' != $subvalue && '.' != $subvalue[0])        // '#' denotes comment
 							{
 								$active = '';
-								if (isset($skel['page']) && $subkey == $skel['page'])
+								if (isset($skel['section']) && $key == $skel['section'] && isset($skel['page']) && $subkey == $skel['page'])
 								{
-									$active = ' class="highlight"';
+									$active = ' class="active"';
 								}
 								$result .= "\t\t\t<li" . $active . "><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . $subvalue . "</a></li>\n";
 							}
