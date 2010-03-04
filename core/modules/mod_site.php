@@ -123,7 +123,12 @@ function buildSitemap($skel, $sections, $base='page', $omitsitemap=false)
 }
 
 
-function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listname = '')
+/**
+ * Build <ul> navigation list from sections and pages
+ * Can omit the sitemap pseudosection; $listname id's the <ul> object;
+ * $addactive adds 'class="highlight" to the currently selected section and page
+ */
+function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listname = '', $addactive = false)
 {
 	if ('' != $listname)
 	{
@@ -139,9 +144,15 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 			$value = getValue($sections[$i]);
 			if ('#' != $key[0] && '' != $value && '.' != $value[0])	// '#' denotes comment, value starting with a dot means hidden
 			{
+				$active = '';
+				if (isset($skel['section']) && $key == $skel['section'])
+				{
+					$active = ' class="highlight"';
+				}
+
 				if ('sitemap' != $key || ('sitemap' == $key && !$omitsitemap))
 				{
-					$result .= "\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . "/\">" . $value . "</a>\n";
+					$result .= "\t<li" . $active . "><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . "/\">" . $value . "</a>\n";
 				}
 
 				if ('sitemap' == $key)
@@ -162,7 +173,12 @@ function buildNavList($skel, $sections, $base='page', $omitsitemap=false, $listn
 							$subvalue = getValue($subsections[$j]);
 							if ('#' != $subkey[0] && '' != $subvalue && '.' != $subvalue[0])        // '#' denotes comment
 							{
-								$result .= "\t\t\t<li><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . $subvalue . "</a></li>\n";
+								$active = '';
+								if (isset($skel['page']) && $subkey == $skel['page'])
+								{
+									$active = ' class="highlight"';
+								}
+								$result .= "\t\t\t<li" . $active . "><a href=\"" . $skel['base_uri'] . $base . '/' . getLanguageKey($skel) . $key . '/' . $subkey . '/">' . $subvalue . "</a></li>\n";
 							}
 						}
 					}
