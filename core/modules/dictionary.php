@@ -58,6 +58,8 @@
 		$skel['dict']['form_isrequired_field'] = 'Dit veld is verplicht';
 		$skel['dict']['submit'] = 'Verstuur';
 
+		$skel['dict']['find'] = 'vind';
+
 		$skel['dict']['errormessage'] = 'Foutmelding';
 		$skel['dict']['section_not_found'] = 'Sectie niet gevonden';
 		$skel['dict']['page_x_not_found'] = 'pagina "%s" niet gevonden';
@@ -98,6 +100,8 @@
 		$skel['dict']['form_need_valid_email'] = 'A valid e-mail address is needed';
 		$skel['dict']['form_isrequired_field'] = 'This field is required';
 		$skel['dict']['submit'] = 'Submit';
+
+		$skel['dict']['find'] = 'find';
 
 		$skel['dict']['errormessage'] = 'Error message';
 		$skel['dict']['section_not_found'] = 'Section not found';
