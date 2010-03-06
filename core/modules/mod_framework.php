@@ -70,6 +70,18 @@ if ('' != $language)
 	$skel['baselanguage'] = $language;
 }
 
+/* Validate some settings */
+if (!isset($skel['searchform']))
+{
+	$skel['searchform'] = false;
+}
+
+if (!isset($skel['siteuri']))
+{
+	$skel['siteuri'] = '';
+}
+
+
 include_once('site/' . getLanguageKey($skel) . 'pagetemplate.php');
 
 $skel['base_uri'] = dirname($_SERVER['PHP_SELF']) . '/';

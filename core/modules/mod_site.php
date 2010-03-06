@@ -117,6 +117,15 @@ function buildSitemap($skel, $sections, $base='page', $omitsitemap=false)
 	{
 		$result = '<div class="updatedat">generated @ ' . date('Y-m-d') . "</div>\n";
 	}
+	if ($skel['searchform'])
+	{
+		$siteuri = $skel['siteuri'];
+		if ('' != $siteuri)
+		{
+			$siteuri = 'site:' . $siteuri;
+		}
+		$result .= "<p><form action=\"http://www.google.com/search\" method=\"get\"><input type=\"hidden\" name=\"q\" value=\"" . $siteuri . "\" /><input type=\"text\" class=\"searchfield\" name=\"q\" size=\"20\" /><input type=\"submit\" value=\"vind\" /></form></p>\n";
+	}
 	$result .= buildNavList($skel, $sections, $base, $omitsitemap, 'sitemap');
 
 	return $result;
