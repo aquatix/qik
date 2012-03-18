@@ -164,7 +164,7 @@ function getItems($skel, $kind, $key)
 				{
 					//unset($datafile[$i]);
 					//$datafile[$i] = null;
-					removeArrayElement(&$datafile, $i);
+					$datafile = removeArrayElement($datafile, $i);
 				} else
 				{
 					$i++;
