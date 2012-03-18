@@ -220,12 +220,13 @@ function getmicrotime()
 /*
  * Remove an element from an array while keeping indices intact [instead of doing unset]
  */
-function removeArrayElement(&$arr, $index)
+function removeArrayElement($arr, $index)
 {
 	if(isset($arr[$index]))
 	{
 		array_splice($arr, $index, 1);
 	}
+	return $arr;
 }
 
 function getURIs($text)
