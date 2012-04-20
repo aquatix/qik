@@ -2,9 +2,8 @@
 /**
  * Module for getting the contents of the qik site -- flat files method
  * Used for abstracting away the storage method, so you can transparantly switch between flat files and database
- * $Id$
  *
- * Copyright 2005-2009 mbscholt at aquariusoft.org
+ * Copyright 2005-2012 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -25,6 +24,9 @@
  */
 
 
+/**
+ * Returns all navigation sections of the site
+ */
 function getSections($skel)
 {
 	$sections = file('site/' . getLanguageKey($skel) . 'section.desc');
@@ -36,6 +38,9 @@ function getSections($skel)
 }
 
 
+/**
+ * Returns the subsections in $section
+ */
 function getSubsections($skel, $section)
 {
 	$subsections = file('site/' . getLanguageKey($skel) . 'sections/' . $section . '.desc');
@@ -47,12 +52,18 @@ function getSubsections($skel, $section)
 }
 
 
+/**
+ * Loads page from disk
+ */
 function getHTMLFileContents($skel, $section, $page)
 {
 	return file_get_contents(getHTMLFilename($skel, $section, $page));
 }
 
 
+/**
+ * Generates filename for the page, based on whether the site is multilingual or not
+ */
 function getHTMLFilename($skel, $section, $page)
 {
 	if (null != $page && '' != $page)
@@ -65,12 +76,18 @@ function getHTMLFilename($skel, $section, $page)
 }
 
 
+/**
+ * Load tile file from disk
+ */
 function getTile($skel, $key)
 {
 	return file_get_contents('site/' . getLanguageKey($skel) . 'tiles/' . $key . '.html');
 }
 
 
+/**
+ * Load file from type $kind from disk
+ */
 function getFile($skel, $kind, $key)
 {
 	return file('site/' . getLanguageKey($skel) . $kind . '/' . $key . '.desc');
@@ -88,17 +105,19 @@ function getFileContents($skel, $kind, $key)
 }
 
 
-/*** Logging functions ***/
+/** ====== Logging functions ====== **/
 
 
 function saveToLog($skel, $section, $page, $statuscode = 200)
 {
 	$site_ip = getenv("REMOTE_ADDR");
 	$useragent = getenv("HTTP_USER_AGENT");
+/*
 	$time = date("d/m/Y - G:i:s", time());	//old style
 	$time = date("Y-m-d G:i:s O", time());	//nice style
 	$time = date("d/M/Y:G:i:s O", time());	//apache style
 	$time = date("d/M/Y:G:i:sO", time());	//all-concatinated style
+*/
 	$time = date("Y-m-d:G:i:sO", time());	//all-concatinated style 2
 
 	$logstring = '';
