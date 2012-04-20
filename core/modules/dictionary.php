@@ -1,12 +1,11 @@
 <?php
 /**
  * Qik site framework dictionary file for multilanguage support
- * $Id$
  * 
- * Copyright 2005-2009 mbscholt at aquariusoft.org
+ * Copyright 2005-2012 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
- * [mbscholt at aquariusoft.org]
+ * [michiel at aquariusoft.org]
  * Please refer to the COPYRIGHT file distributed with this source distribution.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,6 +21,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+
+/* @TODO: replace this dictionary with .mo and .po files from gettext */
 
 	$skel['dict']['language'] = 'en';
 	if ($skel['language'] == 'nl')
