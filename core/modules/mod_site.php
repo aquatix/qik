@@ -1,12 +1,11 @@
 <?php
 /**
  * Module for building most of the various content of the Qik site
- * $Id$
  *
- * Copyright 2005-2009 mbscholt at aquariusoft.org
+ * Copyright 2005-2012 mbscholt at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
- * [mbscholt at aquariusoft.org]
+ * [michiel at aquariusoft.org]
  * Please refer to the COPYRIGHT file distributed with this source distribution.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,6 +23,9 @@
  */
 
 
+/**
+ * Generates a 404 page, based on $message
+ */
 function build404($skel, $navbar, $message = null)
 {
 	header("HTTP/1.0 404 Not Found");
@@ -64,7 +66,7 @@ function buildHTTPErrorPage($skel, $navbar, $code, $message = null)
 }
 
 
-/*
+/**
  * Look up a given key in an array and return its value
  */
 function getName($items, $id)
