@@ -65,7 +65,7 @@ function getSubsections($skel, $section)
  */
 function getHTMLFileContents($skel, $section, $page)
 {
-	$filename = getFilename($skel, $section, $page);
+	$filename = getPageFilename($skel, $section, $page);
 	if (file_exists($filename . '.html'))
 	{
 		return file_get_contents($filename . '.html');
@@ -80,7 +80,7 @@ function getHTMLFileContents($skel, $section, $page)
 /**
  * Generates filename for the page, based on whether the site is multilingual or not
  */
-function getFilename($skel, $section, $page)
+function getPageFilename($skel, $section, $page)
 {
 	if (null != $page && '' != $page)
 	{
