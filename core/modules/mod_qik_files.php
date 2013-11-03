@@ -23,6 +23,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+# Install PSR-0-compatible class autoloader
+spl_autoload_register(function($class){
+        require preg_replace('{\\\\|_(?!.*\\\\)}', DIRECTORY_SEPARATOR, ltrim($class, '\\')).'.php';
+});
+
+# Get Markdown class
+use \Michelf\Markdown;
+
 
 /**
  * Returns all navigation sections of the site
@@ -57,21 +65,29 @@ function getSubsections($skel, $section)
  */
 function getHTMLFileContents($skel, $section, $page)
 {
-	return file_get_contents(getHTMLFilename($skel, $section, $page));
+	$filename = getFilename($skel, $section, $page);
+	if (file_exists($filename . '.html'))
+	{
+		return file_get_contents($filename . '.html');
+	} else
+	{
+		$text = file_get_contents($filename . '.md');
+		return Markdown::defaultTransform($text);
+	}
 }
 
 
 /**
  * Generates filename for the page, based on whether the site is multilingual or not
  */
-function getHTMLFilename($skel, $section, $page)
+function getFilename($skel, $section, $page)
 {
 	if (null != $page && '' != $page)
 	{
-		return 'site/' . getLanguageKey($skel) . 'pages/' . $section . '_' . $page . '.html';
+		return 'site/' . getLanguageKey($skel) . 'pages/' . $section . '_' . $page;
 	} else
 	{
-		return 'site/' . getLanguageKey($skel) . 'pages/' . $section . '.html';
+		return 'site/' . getLanguageKey($skel) . 'pages/' . $section;
 	}
 }
 
@@ -81,7 +97,15 @@ function getHTMLFilename($skel, $section, $page)
  */
 function getTile($skel, $key)
 {
-	return file_get_contents('site/' . getLanguageKey($skel) . 'tiles/' . $key . '.html');
+	$tilename = 'site/' . getLanguageKey($skel) . 'tiles/' . $key;
+	if (file_exists($tilename . '.html'))
+	{
+		return file_get_contents($tilename . '.html');
+	} else
+	{
+		$text = file_get_contents($tilename . '.md');
+		return Markdown::defaultTransform($text);
+	}
 }
 
 
