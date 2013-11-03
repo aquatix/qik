@@ -1,9 +1,8 @@
 <?php
 /**
  * index.php - Main file for the Qik framework
- * $Id$
  *
- * Copyright 2005-2009 mbscholt at aquariusoft.org
+ * Copyright 2005-2013 michiel at aquariusoft.org
  *
  * Qik is the legal property of its developer, Michiel Scholten
  * [mbscholt at aquariusoft.org]
@@ -24,12 +23,12 @@
  */
 
 
-/*** Initializing ***/
+/*** Initialisation ***/
 
-$skel['version'] = '0.2.08 2009-03-09';
+$skel['version'] = '0.2.09 2013-11-03';
 
-$skel['base_dir'] = dirname(__FILE__);
-include_once('modules/mod_framework.php');
+$skel['base_dir'] = dirname($_SERVER['SCRIPT_FILENAME']);
+include_once($skel['base_dir'] . '/modules/mod_framework.php');
 
 if (isset($skel['debugmode']) && true == $skel['debugmode'])
 {

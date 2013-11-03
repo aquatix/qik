@@ -37,7 +37,7 @@ use \Michelf\Markdown;
  */
 function getSections($skel)
 {
-	$sections = file('site/' . getLanguageKey($skel) . 'section.desc');
+	$sections = file($skel['base_dir'] . '/site/' . getLanguageKey($skel) . 'section.desc');
 	if (false == $sections)
 	{
 		$sections = null;
