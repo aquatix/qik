@@ -28,3 +28,8 @@
 	RewriteRule ^page/([^/]+)/([^/]+) index.php?section=$1&page=$2
 	RewriteRule ^page/([^/]+) index.php?section=$1
 </IfModule>
+
+#ErrorDocument 401 /page/error/401/
+#ErrorDocument 403 /page/error/403/
+#ErrorDocument 404 /page/error/404/
+#ErrorDocument 500 /page/error/500/
